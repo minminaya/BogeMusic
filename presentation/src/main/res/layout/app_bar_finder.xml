@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.minminaya.bogemusic.finder.activity.FinderActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/black">
+
+            <Button
+                android:id="@+id/btn_setting"
+                android:layout_width="30dp"
+                android:layout_height="20dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/icon_finder_setting" />
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tablayout"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="70dp"
+                android:layout_toEndOf="@+id/btn_setting"
+                app:tabBackground="@color/black"
+                app:tabIndicatorColor="@color/white"
+                app:tabIndicatorHeight="2dp"
+                app:tabSelectedTextColor="@color/white"
+                app:tabTextAppearance="@android:style/TextAppearance.Holo.Medium"
+                app:tabTextColor="@color/gray" />
+
+            <Button
+                android:id="@+id/btn_search"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/icon_finder_search" />
+        </RelativeLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <include layout="@layout/content_finder" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        app:srcCompat="@android:drawable/ic_dialog_email" />
+
+</android.support.design.widget.CoordinatorLayout>
