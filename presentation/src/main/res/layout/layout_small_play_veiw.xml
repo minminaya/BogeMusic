@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="#333">
+
+    <ImageView
+        android:id="@+id/mini_album"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="15dp"
+        android:src="@drawable/icon_mini_music_album" />
+
+    <include
+        layout="@layout/play_mini_circle"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="80dp" />
+
+    <ImageView
+        android:id="@+id/mini_favorite"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="15dp"
+        android:src="@drawable/icon_mini_favorite" />
+
+    <TextView
+        android:id="@+id/song_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="歌曲名"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:layout_alignTop="@+id/mini_album"
+        android:layout_toEndOf="@+id/mini_album"
+        android:layout_marginStart="22dp" />
+
+    <TextView
+        android:id="@+id/artist_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="歌手名"
+        android:textColor="@color/gray"
+        android:textSize="14sp"
+        android:layout_alignBottom="@+id/mini_album"
+        android:layout_alignStart="@+id/song_name" />
+</RelativeLayout>
