@@ -4,7 +4,7 @@ import android.content.Context;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 
-/**
+/** 媒体扫描刷新工具类
  * Created by Niwa on 2017/5/29.
  */
 

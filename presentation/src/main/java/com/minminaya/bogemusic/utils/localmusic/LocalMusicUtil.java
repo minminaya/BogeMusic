@@ -1,21 +1,15 @@
 package com.minminaya.bogemusic.utils.localmusic;
 
-import android.app.Activity;
-import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
-import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
-import android.os.Handler;
-import android.os.Message;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
 import com.minminaya.bogemusic.App;
@@ -68,45 +62,60 @@ public class LocalMusicUtil {
      *
      * */
     public static void refreshcontentResolverData() {
-//        IntentFilter intentFilter = new IntentFilter(Intent.ACTION_MEDIA_SCANNER_STARTED);
-//        intentFilter.addAction(Intent.ACTION_MEDIA_SCANNER_STARTED);
-//        intentFilter.addDataScheme("file");
-//        App.getINSTANCE().sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://" +
-//                Environment.getExternalStorageDirectory())));
 
-        String[] songTotal = null;
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
+            IntentFilter intentFilter = new IntentFilter(Intent.ACTION_MEDIA_SCANNER_STARTED);
+            intentFilter.addAction(Intent.ACTION_MEDIA_SCANNER_STARTED);
+            intentFilter.addDataScheme("file");
+            App.getINSTANCE().sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://" +
+                    Environment.getExternalStorageDirectory())));
+        }else {
+            //保存歌曲绝对路径的数组，这个用于MediaScannerConnection.scanFile（）第二个参数
+            String[] songTotalPath = null;
 //        String[] mimeTypes = null;
-        File f = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/opo");
-        if (f.isDirectory()) {
-            File[] files = f.listFiles();
-            if (files != null) {
-                songTotal = new String[files.length];
+            //现在假设要扫描sd卡下的opo目录，“/”这个斜杠别丢了，接下来用到的file相关方法啊啥的建议参考下File的类文档
+            File f = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/opo");
+
+            if (f.isDirectory()) {
+                //测试f这个路径表示的文件是否是一个目录
+                File[] files = f.listFiles();//返回一个抽象（绝对）路径名数组，这些路径名表示此抽象路径名表示的目录中的文件
+                if (files != null) {
+                    //初始化数组长度
+                    songTotalPath = new String[files.length];
 //                mimeTypes = new String[files.length];
-                for (int i = 0; i < songTotal.length; i++) {
-                    //默认路径
-                    songTotal[i] = Environment.getExternalStorageDirectory().getAbsolutePath();
+                    for (int i = 0; i < songTotalPath.length; i++) {
+                        //默认路径，这里初始化数组每一项，只是单纯的防止后面用第二种方式扫描文件带来的空指针异常，无实际意义
+                        songTotalPath[i] = Environment.getExternalStorageDirectory().getAbsolutePath();
+                        //只是单纯的防止后面用第二种方式扫描文件带来的空指针异常
 //                    mimeTypes[i] = null;
-                }
-                for (int i = 0; i < files.length; i++) {
-                    if (files[i].isFile()) {
-                        songTotal[i] = Environment.getExternalStorageDirectory().getAbsolutePath() + "/opo/" + files[i].getName();
-                        Log.e("file", files[i].getName());
+                    }
+
+                    for (int i = 0; i < files.length; i++) {
+                        if (files[i].isFile()) {
+                            //如果 扫到的是文件，那么把具体路径存到songTotalPath下
+                            songTotalPath[i] = Environment.getExternalStorageDirectory().getAbsolutePath() + "/opo/" + files[i].getName();
+                            Log.e("file", files[i].getName());
+                        }
                     }
                 }
             }
-        }
+            //这里就可以直接用了，第三个这里用文件的后缀名，为空
+            MediaScannerConnection.scanFile(App.getINSTANCE(), songTotalPath, null, new MediaScannerConnection.OnScanCompletedListener() {
+                @Override
+                public void onScanCompleted(String path, Uri uri) {
+                    //扫描完成时逻辑
+                }
+            });
 
-        MediaScannerConnection.scanFile(App.getINSTANCE(), songTotal, null, null);
-
-
+            //---------------------->第二种方式<----------------------
 //        MediaScanner mediaScanner = new MediaScanner(App.getINSTANCE());
-//        String[] filePaths = songTotal;
+//        String[] filePaths = songTotalPath;
+//        //MimeType文件也可以这个获取，如果不知道媒体文件对应的的值
 ////        String[] mimeTypes = new String[]{MimeTypeMap.getSingleton().getMimeTypeFromExtension("mp3")};
 //
 ////        String[] mimeTypes = new String[]{null};
 //        mediaScanner.scanFiles(filePaths, mimeTypes);
-
-
+        }
     }
 }
 
