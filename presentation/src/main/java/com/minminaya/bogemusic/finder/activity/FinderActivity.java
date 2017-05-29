@@ -20,6 +20,7 @@ import com.minminaya.bogemusic.base.BaseActivity;
 import com.minminaya.bogemusic.finder.adapter.TabFragmentAdapter;
 import com.minminaya.bogemusic.finder.fragment.FinderFragment;
 import com.minminaya.bogemusic.finder.fragment.MineFragment;
+import com.minminaya.bogemusic.utils.PermissionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +55,9 @@ public class FinderActivity extends BaseActivity
 
     @Override
     public void initView(Bundle savedInstanceState) {
+        PermissionUtils.checkPermission(this);
+
+
         mTablayout.addTab(mTablayout.newTab().setText("发现"));
         mTablayout.addTab(mTablayout.newTab().setText("我的"));
 
@@ -62,7 +66,7 @@ public class FinderActivity extends BaseActivity
         List<Fragment> fragmentList = new ArrayList<>();
         fragmentList.add(FinderFragment.newInstance());
         fragmentList.add(MineFragment.newInstance());
-        TabFragmentAdapter tabFragmentAdapter = new TabFragmentAdapter(getSupportFragmentManager(),fragmentList);
+        TabFragmentAdapter tabFragmentAdapter = new TabFragmentAdapter(getSupportFragmentManager(), fragmentList);
         viewpager.setAdapter(tabFragmentAdapter);
     }
 

@@ -14,6 +14,7 @@ import com.github.lzyzsd.circleprogress.DonutProgress;
 import com.minminaya.bogemusic.R;
 import com.minminaya.bogemusic.base.BaseActivity;
 import com.minminaya.bogemusic.mine.fragment.ListFragment;
+import com.minminaya.bogemusic.utils.localmusic.LocalMusicUtil;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -62,7 +63,6 @@ public class ListBaseActivity extends BaseActivity {
 
     @Override
     public void initView(Bundle savedInstanceState) {
-
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .add(R.id.content, ListFragment.newInstance())

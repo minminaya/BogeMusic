@@ -28,10 +28,9 @@
 
             <android.support.design.widget.TabLayout
                 android:id="@+id/tablayout"
+                android:layout_centerInParent="true"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginStart="70dp"
-                android:layout_toEndOf="@+id/btn_setting"
                 app:tabBackground="@color/black"
                 app:tabIndicatorColor="@color/white"
                 app:tabIndicatorHeight="2dp"

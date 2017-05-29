@@ -1,8 +1,10 @@
 package com.minminaya.bogemusic.mine.fragment;
 
+import android.media.MediaScannerConnection;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.View;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -10,6 +12,10 @@ import com.minminaya.bogemusic.App;
 import com.minminaya.bogemusic.R;
 import com.minminaya.bogemusic.base.BaseFragment;
 import com.minminaya.bogemusic.mine.adapter.ListFragmentItemAdapter;
+import com.minminaya.bogemusic.utils.localmusic.LocalMusicUtil;
+import com.minminaya.data.model.LocalMusicModel;
+
+import java.util.List;
 
 import butterknife.Bind;
 
@@ -34,6 +40,12 @@ public class ListFragment extends BaseFragment {
 
     @Override
     public void iniView(View view) {
+        LocalMusicUtil.refreshcontentResolverData();
+        List<LocalMusicModel> list = LocalMusicUtil.iniMediaPlayerContentUri();
+        for (int i = 0; i < list.size(); i++) {
+            Log.e("音乐title", "音乐:" + i + ":" + list.get(i).getSongTitle() + "," + "id:" + list.get(i).getSongId());
+        }
+        Log.e("music数据", "" + list.size());
         ListFragmentItemAdapter listFragmentItemAdapter = new ListFragmentItemAdapter();
         recycleView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         recycleView.setLayoutManager(new LinearLayoutManager(App.getINSTANCE()));
