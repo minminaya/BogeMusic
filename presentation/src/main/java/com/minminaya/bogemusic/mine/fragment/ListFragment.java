@@ -90,7 +90,7 @@ public class ListFragment extends BaseFragment implements MvpView {
 
     @Override
     protected void unBind() {
-//        myBinder.closeMedia();
+        myBinder.closeMedia();
         App.getINSTANCE().unbindService(mServiceConnection);
     }
 
@@ -108,7 +108,7 @@ public class ListFragment extends BaseFragment implements MvpView {
             myBinder = (MediaService.MyBinder) service;
             Log.d("onServiceConnected", "Service与Activity已连接");
             myBinder.setData(list);
-//            myBinder.playMusic();
+            myBinder.playMusic();
         }
 
         @Override

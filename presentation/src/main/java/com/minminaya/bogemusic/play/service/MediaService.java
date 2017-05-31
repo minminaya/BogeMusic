@@ -114,7 +114,9 @@ public class MediaService extends Service {
 
         public void setData(List<LocalMusicModel> list) {
             setLocalMusicModels(list);
+
             Log.e("服务中list:", "" + list.size());
+            iniMediaPlayerFile(0);
         }
     }
 
