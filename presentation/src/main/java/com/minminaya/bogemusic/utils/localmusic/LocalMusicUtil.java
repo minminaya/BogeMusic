@@ -28,7 +28,6 @@ public class LocalMusicUtil {
      * @return localMusicModels 包含查询结果的list集合
      */
     public static List<LocalMusicModel> iniMediaPlayerContentUri() {
-
         List<LocalMusicModel> localMusicModels = new ArrayList<>();
         ContentResolver contentResolver = App.getINSTANCE().getContentResolver();
         Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
@@ -43,7 +42,9 @@ public class LocalMusicUtil {
             int titleColumn = cursor.getColumnIndex(MediaStore.Audio.Media.TITLE);
             int idColumn = cursor.getColumnIndex(MediaStore.Audio.Media._ID);
             int totalMusic = cursor.getCount();
-
+//            int songSizeColumn = cursor.getColumnIndex(MediaStore.Audio.Media.SIZE);
+            int songDurationColumn = cursor.getColumnIndex(MediaStore.Audio.Media.DURATION);
+            int pathColumn = cursor.getColumnIndex(MediaStore.Audio.Media.DATA);
             Log.e("查询信息", "" + totalMusic);
 //            idBag = new long[totalMusic];
 //            localMusicModels = new ArrayList<>(totalMusic);
@@ -51,7 +52,10 @@ public class LocalMusicUtil {
             do {
                 long thisId = cursor.getLong(idColumn);
                 String thisTitle = cursor.getString(titleColumn);
-                localMusicModels.add(new LocalMusicModel(thisId, thisTitle));
+//                int songSize = cursor.getInt(songSizeColumn);
+                int songDuration = cursor.getInt(songDurationColumn);
+                String songPath = cursor.getString(pathColumn);
+                localMusicModels.add(new LocalMusicModel(thisId, thisTitle, songDuration, songPath));
             } while (cursor.moveToNext());
             cursor.close();
         }
@@ -59,8 +63,9 @@ public class LocalMusicUtil {
     }
 
     /**
-     *
-     * */
+     * API19以及以下发送广播刷新内容提供器
+     * API19以上按文件刷新内容提供器
+     */
     public static void refreshcontentResolverData() {
 
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
@@ -69,12 +74,12 @@ public class LocalMusicUtil {
             intentFilter.addDataScheme("file");
             App.getINSTANCE().sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://" +
                     Environment.getExternalStorageDirectory())));
-        }else {
+        } else {
             //保存歌曲绝对路径的数组，这个用于MediaScannerConnection.scanFile（）第二个参数
             String[] songTotalPath = null;
 //        String[] mimeTypes = null;
             //现在假设要扫描sd卡下的opo目录，“/”这个斜杠别丢了，接下来用到的file相关方法啊啥的建议参考下File的类文档
-            File f = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/opo");
+            File f = new File(Environment.getExternalStorageDirectory().getAbsolutePath());
 
             if (f.isDirectory()) {
                 //测试f这个路径表示的文件是否是一个目录
@@ -93,7 +98,7 @@ public class LocalMusicUtil {
                     for (int i = 0; i < files.length; i++) {
                         if (files[i].isFile()) {
                             //如果 扫到的是文件，那么把具体路径存到songTotalPath下
-                            songTotalPath[i] = Environment.getExternalStorageDirectory().getAbsolutePath() + "/opo/" + files[i].getName();
+                            songTotalPath[i] = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + files[i].getName();
                             Log.e("file", files[i].getName());
                         }
                     }

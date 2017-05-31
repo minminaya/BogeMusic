@@ -15,7 +15,7 @@ import android.util.Log;
 public class PermissionUtils {
     /**
      * @param activity
-     * @param failInfo 错误信息之后的
+     *
      */
     public static void checkPermission(Activity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {

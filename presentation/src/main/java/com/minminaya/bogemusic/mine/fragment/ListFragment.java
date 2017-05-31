@@ -1,7 +1,12 @@
 package com.minminaya.bogemusic.mine.fragment;
 
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.media.MediaScannerConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
@@ -12,6 +17,8 @@ import com.minminaya.bogemusic.App;
 import com.minminaya.bogemusic.R;
 import com.minminaya.bogemusic.base.BaseFragment;
 import com.minminaya.bogemusic.mine.adapter.ListFragmentItemAdapter;
+import com.minminaya.bogemusic.mvp.view.MvpView;
+import com.minminaya.bogemusic.play.service.MediaService;
 import com.minminaya.bogemusic.utils.localmusic.LocalMusicUtil;
 import com.minminaya.data.model.LocalMusicModel;
 
@@ -23,11 +30,11 @@ import butterknife.Bind;
  * Created by Niwa on 2017/5/28.
  */
 
-public class ListFragment extends BaseFragment {
+public class ListFragment extends BaseFragment implements MvpView {
 
     @Bind(R.id.recycle_view)
     XRecyclerView recycleView;
-
+    List<LocalMusicModel> list;
 
     public static ListFragment newInstance() {
 
@@ -41,11 +48,20 @@ public class ListFragment extends BaseFragment {
     @Override
     public void iniView(View view) {
         LocalMusicUtil.refreshcontentResolverData();
-        List<LocalMusicModel> list = LocalMusicUtil.iniMediaPlayerContentUri();
+        list = LocalMusicUtil.iniMediaPlayerContentUri();
         for (int i = 0; i < list.size(); i++) {
-            Log.e("音乐title", "音乐:" + i + ":" + list.get(i).getSongTitle() + "," + "id:" + list.get(i).getSongId());
+            Log.e("音乐title", "音乐:" + i + ":" + list.get(i).getSongTitle() + "," + "id:" + list.get(i).getSongId() + "长度：" + list.get(i).getSongDuration() + "歌曲位置：" + list.get(i).getSongPath());
         }
         Log.e("music数据", "" + list.size());
+
+        mediaServiceIntent = new Intent(App.getINSTANCE(), MediaService.class);
+
+        App.getINSTANCE().bindService(mediaServiceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
+//        myBinder.setData(list);
+//        myBinder.playMusic();
+
+
+
         ListFragmentItemAdapter listFragmentItemAdapter = new ListFragmentItemAdapter();
         recycleView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         recycleView.setLayoutManager(new LinearLayoutManager(App.getINSTANCE()));
@@ -74,7 +90,32 @@ public class ListFragment extends BaseFragment {
 
     @Override
     protected void unBind() {
+//        myBinder.closeMedia();
+        App.getINSTANCE().unbindService(mServiceConnection);
+    }
+
+    @Override
+    public void onFailed(Throwable e) {
 
     }
+
+
+    private MediaService.MyBinder myBinder;
+    Intent mediaServiceIntent;
+    private ServiceConnection mServiceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            myBinder = (MediaService.MyBinder) service;
+            Log.d("onServiceConnected", "Service与Activity已连接");
+            myBinder.setData(list);
+//            myBinder.playMusic();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+
+        }
+    };
+
 
 }

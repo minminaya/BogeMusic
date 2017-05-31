@@ -103,7 +103,7 @@ public class FinderActivity extends BaseActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
+        //处理每个item的逻辑
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
