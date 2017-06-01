@@ -6,11 +6,13 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.media.MediaScannerConnection;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.IBinder;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.minminaya.bogemusic.App;
@@ -19,6 +21,7 @@ import com.minminaya.bogemusic.base.BaseFragment;
 import com.minminaya.bogemusic.mine.adapter.ListFragmentItemAdapter;
 import com.minminaya.bogemusic.mvp.view.MvpView;
 import com.minminaya.bogemusic.play.service.MediaService;
+import com.minminaya.bogemusic.utils.DataSetUtil;
 import com.minminaya.bogemusic.utils.localmusic.LocalMusicUtil;
 import com.minminaya.data.model.LocalMusicModel;
 
@@ -49,10 +52,14 @@ public class ListFragment extends BaseFragment implements MvpView {
     public void iniView(View view) {
         LocalMusicUtil.refreshcontentResolverData();
         list = LocalMusicUtil.iniMediaPlayerContentUri();
+        //// TODO: 2017/6/2 测试写对象类 
+        DataSetUtil.writeObject(list, Environment.getExternalStorageDirectory().getAbsolutePath(), "songList");
         for (int i = 0; i < list.size(); i++) {
             Log.e("音乐title", "音乐:" + i + ":" + list.get(i).getSongTitle() + "," + "id:" + list.get(i).getSongId() + "长度：" + list.get(i).getSongDuration() + "歌曲位置：" + list.get(i).getSongPath());
         }
         Log.e("music数据", "" + list.size());
+
+
 
         mediaServiceIntent = new Intent(App.getINSTANCE(), MediaService.class);
 

@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.github.lzyzsd.circleprogress.DonutProgress;
+import com.minminaya.bogemusic.App;
 import com.minminaya.bogemusic.R;
 import com.minminaya.bogemusic.base.BaseActivity;
 import com.minminaya.bogemusic.mine.fragment.ListFragment;
@@ -58,7 +59,6 @@ public class ListBaseActivity extends BaseActivity {
 
     @Override
     public void setListeners() {
-
     }
 
     @Override
