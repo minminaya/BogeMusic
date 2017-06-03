@@ -101,7 +101,6 @@ public class MediaService extends Service {
             }
         }
 
-
         /**
          * 关闭播放器
          */
@@ -111,13 +110,38 @@ public class MediaService extends Service {
                 mMediaPlayer.release();
             }
         }
-
+        /**
+         *
+         *  数据传入Service中
+         * */
         public void setData(List<LocalMusicModel> list) {
             setLocalMusicModels(list);
 
             Log.e("服务中list:", "" + list.size());
             iniMediaPlayerFile(0);
         }
+
+        /**
+         * 获取歌曲长度
+         **/
+        public int getProgress() {
+
+            return mMediaPlayer.getDuration();
+        }
+
+        /**
+         * 获取播放位置
+         */
+        public int getPlayPosition() {
+            return mMediaPlayer.getCurrentPosition();
+        }
+        /**
+         * 播放指定位置
+         */
+        public void seekToPositon(int msec) {
+            mMediaPlayer.seekTo(msec);
+        }
+
     }
 
     /**

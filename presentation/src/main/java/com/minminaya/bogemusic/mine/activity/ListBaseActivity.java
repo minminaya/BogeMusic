@@ -15,6 +15,8 @@ import com.minminaya.bogemusic.App;
 import com.minminaya.bogemusic.R;
 import com.minminaya.bogemusic.base.BaseActivity;
 import com.minminaya.bogemusic.mine.fragment.ListFragment;
+import com.minminaya.bogemusic.mine.presenter.ListBaseActivityPresenter;
+import com.minminaya.bogemusic.mvp.view.MvpView;
 import com.minminaya.bogemusic.utils.localmusic.LocalMusicUtil;
 
 import butterknife.Bind;
@@ -25,7 +27,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by Niwa on 2017/5/27.
  */
 
-public class ListBaseActivity extends BaseActivity {
+public class ListBaseActivity extends BaseActivity implements MvpView {
     @Bind(R.id.btn_setting)
     Button btnSetting;
     @Bind(R.id.btn_search)
@@ -38,8 +40,8 @@ public class ListBaseActivity extends BaseActivity {
     ImageView miniAlbum;
     @Bind(R.id.mini_play)
     CircleImageView miniPlay;
-    @Bind(R.id.play_circle_progress)
-    DonutProgress playCircleProgress;
+//    @Bind(R.id.play_circle_progress)
+//    DonutProgress playCircleProgress;
     @Bind(R.id.mini_favorite)
     ImageView miniFavorite;
     @Bind(R.id.song_name)
@@ -47,6 +49,7 @@ public class ListBaseActivity extends BaseActivity {
     @Bind(R.id.artist_name)
     TextView artistName;
 
+    ListBaseActivityPresenter mListBaseActivityPresenter  = null;
     @Override
     public void unBind() {
 
@@ -68,7 +71,9 @@ public class ListBaseActivity extends BaseActivity {
                 .add(R.id.content, ListFragment.newInstance())
                 .commit();
 
-    }
+        mListBaseActivityPresenter = new ListBaseActivityPresenter();
+        mListBaseActivityPresenter.attachView(this);
+}
 
     @Override
     public int getContentView() {
@@ -93,4 +98,10 @@ public class ListBaseActivity extends BaseActivity {
                 break;
         }
     }
+
+    @Override
+    public void onFailed(Throwable e) {
+
+    }
+
 }

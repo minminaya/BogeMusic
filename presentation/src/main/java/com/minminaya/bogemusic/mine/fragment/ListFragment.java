@@ -13,7 +13,10 @@ import com.minminaya.bogemusic.mine.adapter.ListFragmentItemAdapter;
 import com.minminaya.bogemusic.mine.presenter.ListFragmentPresenter;
 import com.minminaya.bogemusic.mvp.view.MvpView;
 import com.minminaya.bogemusic.utils.localmusic.LocalMusicUtil;
+import com.minminaya.data.model.LocalMusicModel;
 
+
+import java.util.List;
 
 import butterknife.Bind;
 
@@ -25,9 +28,8 @@ public class ListFragment extends BaseFragment implements MvpView {
 
     @Bind(R.id.recycle_view)
     XRecyclerView recycleView;
-
     ListFragmentPresenter mListFragmentPresenter;
-
+    ListFragmentItemAdapter listFragmentItemAdapter;
     public static ListFragment newInstance() {
 
         Bundle args = new Bundle();
@@ -47,10 +49,14 @@ public class ListFragment extends BaseFragment implements MvpView {
 
         mListFragmentPresenter.initService();
 
-        ListFragmentItemAdapter listFragmentItemAdapter = new ListFragmentItemAdapter();
+        listFragmentItemAdapter = new ListFragmentItemAdapter();
+        mListFragmentPresenter.setSongListToAdapter();
         recycleView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         recycleView.setLayoutManager(new LinearLayoutManager(App.getINSTANCE()));
         recycleView.setAdapter(listFragmentItemAdapter);
+
+
+
     }
 
     @Override
@@ -76,10 +82,17 @@ public class ListFragment extends BaseFragment implements MvpView {
     @Override
     protected void unBind() {
         mListFragmentPresenter.closeMediaAndStopService();
+        mListFragmentPresenter.disattachHandler();
     }
 
     @Override
     public void onFailed(Throwable e) {
 
     }
+
+    public void setSongListToAdapter(List<LocalMusicModel> list){
+        listFragmentItemAdapter.setSongList(list);
+    }
+
+
 }

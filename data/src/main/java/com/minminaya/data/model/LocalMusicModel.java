@@ -11,13 +11,16 @@ public class LocalMusicModel {
     private String songTitle;
     private int songDuration;
     private String songPath;
+    private String songArtist;
+
 //    private int songSize;
 
-    public LocalMusicModel(long songId, String songTitle, int songDuration, String songPath) {
+    public LocalMusicModel(long songId, String songTitle, int songDuration, String songPath, String songArtist) {
         this.songId = songId;
         this.songTitle = songTitle;
         this.songDuration = songDuration;
         this.songPath = songPath;
+        this.songArtist = songArtist;
     }
 
     public long getSongId() {
@@ -49,7 +52,17 @@ public class LocalMusicModel {
         return songPath;
     }
 
+    public String getSongArtist() {
+        return songArtist;
+    }
+
+    public void setSongArtist(String songArtist) {
+        this.songArtist = songArtist;
+    }
+
     public void setSongPath(String songPath) {
+
+
         this.songPath = songPath;
     }
 }

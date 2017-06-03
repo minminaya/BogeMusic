@@ -6,8 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.minminaya.bogemusic.R;
+import com.minminaya.data.model.LocalMusicModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +27,8 @@ public class ListFragmentItemAdapter extends RecyclerView.Adapter<ListFragmentIt
         }
     }
 
+    private List<LocalMusicModel> songList;
+
 
 
 
@@ -39,12 +41,15 @@ public class ListFragmentItemAdapter extends RecyclerView.Adapter<ListFragmentIt
 
     @Override
     public void onBindViewHolder(ViewHolderA holder, int position) {
-
+        if(songList != null){
+            holder.textItemArtist.setText(songList.get(position).getSongArtist());
+            holder.textItemSongTitle.setText(songList.get(position).getSongTitle());
+        }
     }
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return songList.size();
     }
 
 
@@ -58,5 +63,9 @@ public class ListFragmentItemAdapter extends RecyclerView.Adapter<ListFragmentIt
             super(view);
             ButterKnife.bind(this, view);
         }
+    }
+
+    public void setSongList(List<LocalMusicModel> songList) {
+        this.songList = songList;
     }
 }

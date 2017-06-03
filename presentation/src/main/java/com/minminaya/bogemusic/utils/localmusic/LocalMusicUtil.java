@@ -45,6 +45,7 @@ public class LocalMusicUtil {
 //            int songSizeColumn = cursor.getColumnIndex(MediaStore.Audio.Media.SIZE);
             int songDurationColumn = cursor.getColumnIndex(MediaStore.Audio.Media.DURATION);
             int pathColumn = cursor.getColumnIndex(MediaStore.Audio.Media.DATA);
+            int songArtistColumn = cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST);
             Log.e("查询信息", "" + totalMusic);
 //            idBag = new long[totalMusic];
 //            localMusicModels = new ArrayList<>(totalMusic);
@@ -55,7 +56,8 @@ public class LocalMusicUtil {
 //                int songSize = cursor.getInt(songSizeColumn);
                 int songDuration = cursor.getInt(songDurationColumn);
                 String songPath = cursor.getString(pathColumn);
-                localMusicModels.add(new LocalMusicModel(thisId, thisTitle, songDuration, songPath));
+                String songArtist = cursor.getString(songArtistColumn);
+                localMusicModels.add(new LocalMusicModel(thisId, thisTitle, songDuration, songPath, songArtist));
             } while (cursor.moveToNext());
             cursor.close();
         }
