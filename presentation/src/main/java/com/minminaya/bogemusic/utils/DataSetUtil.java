@@ -18,6 +18,8 @@ public class DataSetUtil {
 
     /**
      *
+     * 将对象object写入路径filePath下的fileName文件中
+     *
      * 1.先建立目录
      * 2.接着建立文件，文件名建议用对象名加上seria后缀，比如要保存list对象，文件名是list.seria，代表list序列化后保存的文件
      *
@@ -64,7 +66,9 @@ public class DataSetUtil {
             objectOutputStream.writeObject(object);
             objectOutputStream.flush();
             objectOutputStream.close();
-            fileOutputStream.close();
+            if(fileOutputStream != null){
+                fileOutputStream.close();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -95,7 +99,10 @@ public class DataSetUtil {
         }
 
         try {
-            object = objectInputStream.readObject();
+
+            if (objectInputStream != null) {
+                object = objectInputStream.readObject();
+            }
         } catch (ClassNotFoundException | IOException e) {
             e.printStackTrace();
         }
