@@ -1,6 +1,7 @@
 package com.minminaya.bogemusic.mine.fragment;
 
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
@@ -12,6 +13,7 @@ import com.minminaya.bogemusic.base.BaseFragment;
 import com.minminaya.bogemusic.mine.adapter.ListFragmentItemAdapter;
 import com.minminaya.bogemusic.mine.presenter.ListFragmentPresenter;
 import com.minminaya.bogemusic.mvp.view.MvpView;
+import com.minminaya.bogemusic.play.service.MediaService;
 import com.minminaya.bogemusic.utils.localmusic.LocalMusicUtil;
 import com.minminaya.data.model.LocalMusicModel;
 
@@ -20,7 +22,8 @@ import java.util.List;
 
 import butterknife.Bind;
 
-/**  歌曲列表Fragment
+/**
+ * 歌曲列表Fragment
  * Created by Niwa on 2017/5/28.
  */
 
@@ -30,6 +33,8 @@ public class ListFragment extends BaseFragment implements MvpView {
     XRecyclerView recycleView;
     ListFragmentPresenter mListFragmentPresenter;
     ListFragmentItemAdapter listFragmentItemAdapter;
+    private IBinder iBinder;
+
     public static ListFragment newInstance() {
 
         Bundle args = new Bundle();
@@ -54,7 +59,7 @@ public class ListFragment extends BaseFragment implements MvpView {
         recycleView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         recycleView.setLayoutManager(new LinearLayoutManager(App.getINSTANCE()));
         recycleView.setAdapter(listFragmentItemAdapter);
-
+       listFragmentItemAdapter.setmPresenter(mListFragmentPresenter);
 
 
     }
@@ -90,7 +95,7 @@ public class ListFragment extends BaseFragment implements MvpView {
 
     }
 
-    public void setSongListToAdapter(List<LocalMusicModel> list){
+    public void setSongListToAdapter(List<LocalMusicModel> list) {
         listFragmentItemAdapter.setSongList(list);
     }
 

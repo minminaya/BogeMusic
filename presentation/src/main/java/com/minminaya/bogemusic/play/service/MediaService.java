@@ -66,6 +66,17 @@ public class MediaService extends Service {
             }
         }
 
+
+        /**
+         *  选取指定歌曲
+         *
+         * */
+        public void seekSong(int position){
+            mMediaPlayer.reset();
+            iniMediaPlayerFile(position);
+            playMusic();
+        }
+
         /**
          * 下一首
          */

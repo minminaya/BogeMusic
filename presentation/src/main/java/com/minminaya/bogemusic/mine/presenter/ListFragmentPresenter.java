@@ -37,6 +37,7 @@ public class ListFragmentPresenter extends BasePresenter<ListFragment> {
 
     private List<LocalMusicModel> list;
     private MediaService.MyBinder myBinder;
+
     private Intent mediaServiceIntent;
     private DonutProgress playCircleProgress;
     private ServiceConnection mServiceConnection = new ServiceConnection() {
@@ -111,4 +112,12 @@ public class ListFragmentPresenter extends BasePresenter<ListFragment> {
     public void disattachHandler(){
         mHandler.removeCallbacks(runnable);
     }
+    /**
+     *  选取指定歌曲
+     *
+     * */
+    public void seekSong(int position){
+        myBinder.seekSong(position);
+    }
+
 }

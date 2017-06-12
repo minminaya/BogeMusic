@@ -1,11 +1,14 @@
 package com.minminaya.data.model;
 
+import java.io.Serializable;
+
 /**
  * Created by Niwa on 2017/5/29.
  */
 
-public class LocalMusicModel {
+public class LocalMusicModel implements Serializable {
 
+    private static final long serialVersionUID = 6134781028719601869L;
 
     private long songId;
     private String songTitle;

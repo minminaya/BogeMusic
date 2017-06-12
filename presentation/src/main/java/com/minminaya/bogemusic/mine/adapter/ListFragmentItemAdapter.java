@@ -11,10 +11,10 @@ import android.widget.TextView;
 
 import com.minminaya.bogemusic.App;
 import com.minminaya.bogemusic.R;
+import com.minminaya.bogemusic.mine.presenter.ListFragmentPresenter;
 import com.minminaya.bogemusic.play.activity.MusicPlayActivity;
 import com.minminaya.data.model.LocalMusicModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -26,12 +26,12 @@ import butterknife.ButterKnife;
 
 public class ListFragmentItemAdapter extends RecyclerView.Adapter<ListFragmentItemAdapter.ViewHolderA> {
 
-    private List<String> list = new ArrayList<>();
-
     public ListFragmentItemAdapter() {
-        for (int i = 0; i < 20; i++) {
-            list.add("item" + i);
-        }
+    }
+    private ListFragmentPresenter mPresenter;
+
+    public void setmPresenter(ListFragmentPresenter mPresenter) {
+        this.mPresenter = mPresenter;
     }
 
     private List<LocalMusicModel> songList;
@@ -82,10 +82,11 @@ public class ListFragmentItemAdapter extends RecyclerView.Adapter<ListFragmentIt
         holder.layoutSongListItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(App.getINSTANCE(), MusicPlayActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putInt("position", position);
-                App.getINSTANCE().startActivity(intent);
+                Intent intent = new Intent(mPresenter.getMvpView().getContext(), MusicPlayActivity.class);
+//                Bundle bundle = new Bundle();
+//                bundle.putInt("position", position);
+                mPresenter.getMvpView().startActivity(intent);
+                mPresenter.seekSong(position);
             }
         });
     }
