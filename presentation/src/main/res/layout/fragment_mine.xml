@@ -10,6 +10,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:foreground="?android:attr/selectableItemBackground"
             android:id="@+id/text_local_music"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -23,6 +24,7 @@
         <include layout="@layout/divider_view" />
 
         <TextView
+            android:foreground="?android:attr/selectableItemBackground"
             android:id="@+id/text_last_play"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,6 +38,7 @@
         <include layout="@layout/divider_view" />
 
         <TextView
+            android:foreground="?android:attr/selectableItemBackground"
             android:id="@+id/text_my_favorite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

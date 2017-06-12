@@ -23,6 +23,9 @@
         <activity
             android:name=".mine.activity.ListBaseActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".play.activity.MusicPlayActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <service android:name=".play.service.MediaService" />
     </application>

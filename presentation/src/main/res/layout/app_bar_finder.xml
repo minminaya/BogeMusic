@@ -45,7 +45,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="10dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/icon_finder_search" />
+                android:background="@drawable/icon_search" />
         </RelativeLayout>
 
     </android.support.design.widget.AppBarLayout>

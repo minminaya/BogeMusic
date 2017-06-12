@@ -1,12 +1,17 @@
 package com.minminaya.bogemusic.mine.adapter;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.minminaya.bogemusic.App;
 import com.minminaya.bogemusic.R;
+import com.minminaya.bogemusic.play.activity.MusicPlayActivity;
 import com.minminaya.data.model.LocalMusicModel;
 
 import java.util.ArrayList;
@@ -20,7 +25,9 @@ import butterknife.ButterKnife;
  */
 
 public class ListFragmentItemAdapter extends RecyclerView.Adapter<ListFragmentItemAdapter.ViewHolderA> {
+
     private List<String> list = new ArrayList<>();
+
     public ListFragmentItemAdapter() {
         for (int i = 0; i < 20; i++) {
             list.add("item" + i);
@@ -28,8 +35,6 @@ public class ListFragmentItemAdapter extends RecyclerView.Adapter<ListFragmentIt
     }
 
     private List<LocalMusicModel> songList;
-
-
 
 
     @Override
@@ -41,9 +46,10 @@ public class ListFragmentItemAdapter extends RecyclerView.Adapter<ListFragmentIt
 
     @Override
     public void onBindViewHolder(ViewHolderA holder, int position) {
-        if(songList != null){
+        if (songList != null) {
             holder.textItemArtist.setText(songList.get(position).getSongArtist());
             holder.textItemSongTitle.setText(songList.get(position).getSongTitle());
+            setSongItemListener(holder, position);
         }
     }
 
@@ -54,6 +60,8 @@ public class ListFragmentItemAdapter extends RecyclerView.Adapter<ListFragmentIt
 
 
     public class ViewHolderA extends RecyclerView.ViewHolder {
+        @Bind(R.id.layout_song_list_item)
+        RelativeLayout layoutSongListItem;
         @Bind(R.id.text_item_song_title)
         TextView textItemSongTitle;
         @Bind(R.id.text_item_artist)
@@ -67,5 +75,18 @@ public class ListFragmentItemAdapter extends RecyclerView.Adapter<ListFragmentIt
 
     public void setSongList(List<LocalMusicModel> songList) {
         this.songList = songList;
+    }
+
+
+    private void setSongItemListener(ViewHolderA holder, final int position) {
+        holder.layoutSongListItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(App.getINSTANCE(), MusicPlayActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("position", position);
+                App.getINSTANCE().startActivity(intent);
+            }
+        });
     }
 }

@@ -20,7 +20,7 @@ import java.util.List;
 
 import butterknife.Bind;
 
-/**
+/**  歌曲列表Fragment
  * Created by Niwa on 2017/5/28.
  */
 
