@@ -1,10 +1,16 @@
 package com.minminaya.bogemusic.mine.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.minminaya.bogemusic.App;
@@ -28,6 +34,7 @@ import butterknife.Bind;
  */
 
 public class ListFragment extends BaseFragment implements MvpView {
+
 
     @Bind(R.id.recycle_view)
     XRecyclerView recycleView;
@@ -59,9 +66,7 @@ public class ListFragment extends BaseFragment implements MvpView {
         recycleView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         recycleView.setLayoutManager(new LinearLayoutManager(App.getINSTANCE()));
         recycleView.setAdapter(listFragmentItemAdapter);
-       listFragmentItemAdapter.setmPresenter(mListFragmentPresenter);
-
-
+        listFragmentItemAdapter.setmPresenter(mListFragmentPresenter);
     }
 
     @Override
@@ -98,6 +103,4 @@ public class ListFragment extends BaseFragment implements MvpView {
     public void setSongListToAdapter(List<LocalMusicModel> list) {
         listFragmentItemAdapter.setSongList(list);
     }
-
-
 }

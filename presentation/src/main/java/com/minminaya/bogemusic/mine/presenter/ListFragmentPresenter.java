@@ -1,14 +1,14 @@
 package com.minminaya.bogemusic.mine.presenter;
 
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
-import android.os.Message;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -23,17 +23,16 @@ import com.minminaya.bogemusic.utils.localmusic.LocalMusicUtil;
 import com.minminaya.data.model.LocalMusicModel;
 
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Created by Niwa on 2017/5/31.
  */
 
-public class ListFragmentPresenter extends BasePresenter<ListFragment> {
+public class ListFragmentPresenter extends BasePresenter<ListFragment>{
 
     public ListFragmentPresenter() {
     }
+    MyBroadcastReceiver myBroadcastReceiver;
 
     private List<LocalMusicModel> list;
     private MediaService.MyBinder myBinder;
@@ -56,6 +55,8 @@ public class ListFragmentPresenter extends BasePresenter<ListFragment> {
         }
     };
 
+
+
     /**
      * 初始化Service
      */
@@ -63,6 +64,9 @@ public class ListFragmentPresenter extends BasePresenter<ListFragment> {
         mediaServiceIntent = new Intent(App.getINSTANCE(), MediaService.class);
         App.getINSTANCE().bindService(mediaServiceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
         playCircleProgress = (DonutProgress) getMvpView().getActivity().findViewById(R.id.play_circle_progress);
+        myBroadcastReceiver = new MyBroadcastReceiver();
+        IntentFilter intentFilter = new IntentFilter("com.minminaya.MY_BROADCAST");
+        App.getINSTANCE().registerReceiver(myBroadcastReceiver, intentFilter);
     }
 
     /**
@@ -86,6 +90,7 @@ public class ListFragmentPresenter extends BasePresenter<ListFragment> {
         myBinder.closeMedia();
         App.getINSTANCE().unbindService(mServiceConnection);
         Toast.makeText(getMvpView().getContext(), "播放服务已停止", Toast.LENGTH_SHORT).show();
+        App.getINSTANCE().unregisterReceiver(myBroadcastReceiver);
     }
 
 
@@ -118,6 +123,24 @@ public class ListFragmentPresenter extends BasePresenter<ListFragment> {
      * */
     public void seekSong(int position){
         myBinder.seekSong(position);
+    }
+    public class MyBroadcastReceiver extends BroadcastReceiver {
+
+        public MyBroadcastReceiver() {
+        }
+
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.e("MyBroadcastReceiver", "接受到了哦");
+            Toast.makeText(App.getINSTANCE(), "接受到了哦", Toast.LENGTH_SHORT).show();
+            int i = intent.getIntExtra("paly_or_pause",100);
+            if(i == 0){
+                myBinder.seekSong(0);
+            }else if(i == 1){
+                myBinder.seekSong(1);
+            }
+        }
     }
 
 }

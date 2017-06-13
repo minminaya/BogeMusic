@@ -2,7 +2,9 @@ package com.minminaya.bogemusic.mine.adapter;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,7 @@ import com.minminaya.bogemusic.App;
 import com.minminaya.bogemusic.R;
 import com.minminaya.bogemusic.mine.presenter.ListFragmentPresenter;
 import com.minminaya.bogemusic.play.activity.MusicPlayActivity;
+import com.minminaya.bogemusic.utils.DataSetUtil;
 import com.minminaya.data.model.LocalMusicModel;
 
 import java.util.List;
@@ -83,8 +86,9 @@ public class ListFragmentItemAdapter extends RecyclerView.Adapter<ListFragmentIt
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mPresenter.getMvpView().getContext(), MusicPlayActivity.class);
-//                Bundle bundle = new Bundle();
+                Bundle bundle = new Bundle();
 //                bundle.putInt("position", position);
+
                 mPresenter.getMvpView().startActivity(intent);
                 mPresenter.seekSong(position);
             }
