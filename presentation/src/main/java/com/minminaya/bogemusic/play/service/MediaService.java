@@ -4,10 +4,13 @@ import android.app.Service;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Binder;
+import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.minminaya.bogemusic.App;
+import com.minminaya.bogemusic.C;
 import com.minminaya.data.model.LocalMusicModel;
 
 import java.io.IOException;
@@ -25,6 +28,8 @@ public class MediaService extends Service {
     private MyBinder myBinder = new MyBinder();
     //标记当前歌曲的序号
     private int i = 0;
+
+    private Handler mHandler = new Handler();
 
     public MediaService() {
 //        iniMediaPlayerFile(0);
@@ -68,10 +73,9 @@ public class MediaService extends Service {
 
 
         /**
-         *  选取指定歌曲
-         *
-         * */
-        public void seekSong(int position){
+         * 选取指定歌曲
+         */
+        public void seekSong(int position) {
             mMediaPlayer.reset();
             iniMediaPlayerFile(position);
             playMusic();
@@ -121,15 +125,13 @@ public class MediaService extends Service {
                 mMediaPlayer.release();
             }
         }
+
         /**
-         *
-         *  数据传入Service中
-         * */
+         * 数据传入Service中
+         */
         public void setData(List<LocalMusicModel> list) {
             setLocalMusicModels(list);
-
-            Log.e("服务中list:", "" + list.size());
-            iniMediaPlayerFile(0);
+//            iniMediaPlayerFile(0);
         }
 
         /**
@@ -146,6 +148,7 @@ public class MediaService extends Service {
         public int getPlayPosition() {
             return mMediaPlayer.getCurrentPosition();
         }
+
         /**
          * 播放指定位置
          */
@@ -166,9 +169,56 @@ public class MediaService extends Service {
             mMediaPlayer.setDataSource(localMusicModels.get(dex).getSongPath());
             //让MediaPlayer对象准备
             mMediaPlayer.prepare();
+
+            sendSongTotalBroadcast(dex);
+
+
         } catch (IOException e) {
             Log.d(TAG, "设置资源，准备阶段出错");
             e.printStackTrace();
         }
     }
+
+    /**
+     * 将歌曲长度发送给播放界面MusicPlayActivity
+     */
+    private void sendSongTotalBroadcast(final int dex) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Intent i = new Intent(C.InstantForBroadcastReceiverForMusicServiceData.ACTION);
+                i.putExtra(C.InstantForBroadcastReceiverForMusicServiceData.MUSIC_PLAY_KEY_2, C.InstantForBroadcastReceiverForMusicServiceData.TOTAL_LONG_FLAG);
+                //下面传的是值
+                i.putExtra(C.InstantForBroadcastReceiverForMusicServiceData.TOTAL_SONG_POSITION, myBinder.getProgress());
+                //当前歌曲歌手名字
+                i.putExtra(C.InstantForBroadcastReceiverForMusicServiceData.CURRENT_SONG_TITLE, localMusicModels.get(dex).getSongTitle());
+                //当前歌曲名字
+                i.putExtra(C.InstantForBroadcastReceiverForMusicServiceData.CURRENT_SONG_ARTIST_TITLE, localMusicModels.get(dex).getSongArtist());
+                App.getINSTANCE().sendBroadcast(i);
+
+                mHandler.post(mRunnable);
+            }
+        }).start();
+    }
+//    int p = 0;
+    /**
+     *
+     */
+    private Runnable mRunnable = new Runnable() {
+        @Override
+        public void run() {
+            Intent i = new Intent(C.InstantForBroadcastReceiverForMusicServiceData.ACTION);
+            i.putExtra(C.InstantForBroadcastReceiverForMusicServiceData.MUSIC_PLAY_KEY_2, C.InstantForBroadcastReceiverForMusicServiceData.CURRENT_SONG_POSITION_FLAG);
+            i.putExtra(C.InstantForBroadcastReceiverForMusicServiceData.CURRENT_SONG_POSITION, myBinder.getPlayPosition());
+            App.getINSTANCE().sendBroadcast(i);
+
+//            Log.e("MusicPlayActivity", "发送次数：" + p++);
+            mHandler.postDelayed(mRunnable, 1000);
+        }
+    };
 }

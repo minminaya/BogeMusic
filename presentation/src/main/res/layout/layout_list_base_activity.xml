@@ -44,12 +44,14 @@
     <FrameLayout
         android:id="@+id/content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/title_bar" />
+        android:layout_height="500dp"
+        android:layout_below="@+id/title_bar"
+        android:layout_above="@+id/include" />
 
     <include
         layout="@layout/layout_small_play_veiw"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentBottom="true"
+        android:id="@+id/include" />
 </RelativeLayout>

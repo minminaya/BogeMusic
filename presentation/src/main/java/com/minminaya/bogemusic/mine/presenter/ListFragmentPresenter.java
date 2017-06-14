@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.github.lzyzsd.circleprogress.DonutProgress;
 import com.minminaya.bogemusic.App;
+import com.minminaya.bogemusic.C;
 import com.minminaya.bogemusic.R;
 import com.minminaya.bogemusic.mine.fragment.ListFragment;
 import com.minminaya.bogemusic.mvp.presenter.base.BasePresenter;
@@ -28,11 +29,12 @@ import java.util.List;
  * Created by Niwa on 2017/5/31.
  */
 
-public class ListFragmentPresenter extends BasePresenter<ListFragment>{
+public class ListFragmentPresenter extends BasePresenter<ListFragment> {
 
     public ListFragmentPresenter() {
     }
-    MyBroadcastReceiver myBroadcastReceiver;
+
+    private MyBroadcastReceiver myBroadcastReceiver;
 
     private List<LocalMusicModel> list;
     private MediaService.MyBinder myBinder;
@@ -56,7 +58,6 @@ public class ListFragmentPresenter extends BasePresenter<ListFragment>{
     };
 
 
-
     /**
      * 初始化Service
      */
@@ -64,8 +65,10 @@ public class ListFragmentPresenter extends BasePresenter<ListFragment>{
         mediaServiceIntent = new Intent(App.getINSTANCE(), MediaService.class);
         App.getINSTANCE().bindService(mediaServiceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
         playCircleProgress = (DonutProgress) getMvpView().getActivity().findViewById(R.id.play_circle_progress);
+
+        //初始化并动态注册广播接收器
         myBroadcastReceiver = new MyBroadcastReceiver();
-        IntentFilter intentFilter = new IntentFilter("com.minminaya.MY_BROADCAST");
+        IntentFilter intentFilter = new IntentFilter(C.InstantForReceiver.ACTION);
         App.getINSTANCE().registerReceiver(myBroadcastReceiver, intentFilter);
     }
 
@@ -110,35 +113,66 @@ public class ListFragmentPresenter extends BasePresenter<ListFragment>{
             mHandler.postDelayed(runnable, 1000);
         }
     };
+
     /**
-     *  移除runnable，
+     * 移除runnable，
      * 我们的handler发送是定时1000s发送的，如果不关闭，MediaPlayer release掉了还在获取getCurrentPosition就会爆IllegalStateException错误
-     * */
-    public void disattachHandler(){
+     */
+    public void disattachHandler() {
         mHandler.removeCallbacks(runnable);
     }
+
     /**
-     *  选取指定歌曲
-     *
-     * */
-    public void seekSong(int position){
+     * 选取指定歌曲
+     */
+    public void seekSong(int position) {
         myBinder.seekSong(position);
     }
+
+    /**
+     * 获取歌曲长度
+     */
+    public float getTotalPosition() {
+        return myBinder.getProgress();
+    }
+
+
+    /**
+     * 用于接受广播从而控制播放服务的类
+     */
     public class MyBroadcastReceiver extends BroadcastReceiver {
 
         public MyBroadcastReceiver() {
         }
 
+        //当前播放状态
+        private boolean currentPlayState = true;
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.e("MyBroadcastReceiver", "接受到了哦");
-            Toast.makeText(App.getINSTANCE(), "接受到了哦", Toast.LENGTH_SHORT).show();
-            int i = intent.getIntExtra("paly_or_pause",100);
-            if(i == 0){
-                myBinder.seekSong(0);
-            }else if(i == 1){
-                myBinder.seekSong(1);
+//            Toast.makeText(App.getINSTANCE(), "接受到了哦", Toast.LENGTH_SHORT).show();
+            //默认值100随便填的
+            int i = intent.getIntExtra(C.InstantForReceiver.MUSIC_PLAY_KEY, 100);
+            switch (i) {
+                case C.InstantForReceiver.BUTTON_LAST:
+                    myBinder.preciousMusic();
+                    break;
+                case C.InstantForReceiver.BUTTON_NEXT:
+                    myBinder.nextMusic();
+                    break;
+                case C.InstantForReceiver.PLAY_OR_PAUSE:
+                    if (currentPlayState) {
+                        myBinder.pauseMusic();
+                        currentPlayState = false;
+                    } else {
+                        myBinder.playMusic();
+                        currentPlayState = true;
+                    }
+                    break;
+                case C.InstantForReceiver.UPDATA_SONG_POSITION_FlAG:
+                    int position = intent.getIntExtra(C.InstantForReceiver.UPDATA_SONG_POSITION, 100);
+                    myBinder.seekToPositon(position);
+                    break;
             }
         }
     }

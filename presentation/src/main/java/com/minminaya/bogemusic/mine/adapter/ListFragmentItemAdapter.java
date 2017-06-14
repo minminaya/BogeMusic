@@ -12,10 +12,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.minminaya.bogemusic.App;
+import com.minminaya.bogemusic.C;
 import com.minminaya.bogemusic.R;
 import com.minminaya.bogemusic.mine.presenter.ListFragmentPresenter;
 import com.minminaya.bogemusic.play.activity.MusicPlayActivity;
-import com.minminaya.bogemusic.utils.DataSetUtil;
 import com.minminaya.data.model.LocalMusicModel;
 
 import java.util.List;

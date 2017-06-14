@@ -17,6 +17,7 @@
         android:background="@color/black">
 
         <Button
+            android:foreground="?android:attr/selectableItemBackground"
             android:id="@+id/btn_exit"
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -60,6 +61,7 @@
         </RelativeLayout>
 
         <Button
+            android:foreground="?android:attr/selectableItemBackground"
             android:id="@+id/btn_search"
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -95,7 +97,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="12dp"
                 android:gravity="center"
-                android:text="00:56"
+                android:text="00:00"
                 android:textSize="20sp" />
 
             <SeekBar
@@ -103,7 +105,7 @@
                 android:layout_width="250dp"
                 android:layout_height="30dp"
                 android:layout_centerInParent="true"
-                android:max="100"
+                android:max="100000"
                 android:progress="20"
                 android:thumb="@drawable/seek" />
 
@@ -114,7 +116,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="12dp"
                 android:gravity="center"
-                android:text="04:56"
+                android:text="00:00"
                 android:textSize="20sp" />
         </RelativeLayout>
 
@@ -126,6 +128,7 @@
             android:layout_marginTop="2dp">
 
             <Button
+                android:foreground="?android:attr/selectableItemBackground"
                 android:id="@+id/btn_paly_mode"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
@@ -135,6 +138,7 @@
                 android:padding="1dp" />
 
             <Button
+                android:foreground="?android:attr/selectableItemBackground"
                 android:id="@+id/btn_last"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
@@ -143,6 +147,7 @@
                 android:background="@drawable/icon_play_last" />
 
             <Button
+                android:foreground="?android:attr/selectableItemBackground"
                 android:id="@+id/btn_play_or_pause"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
@@ -150,6 +155,7 @@
                 android:background="@drawable/icon_play_start" />
 
             <Button
+                android:foreground="?android:attr/selectableItemBackground"
                 android:id="@+id/btn_next"
                 android:layout_width="37dp"
                 android:layout_height="37dp"
@@ -159,6 +165,7 @@
                 android:background="@drawable/icon_next_song" />
 
             <Button
+                android:foreground="?android:attr/selectableItemBackground"
                 android:id="@+id/btn_song_info"
                 android:layout_width="30dp"
                 android:layout_height="30dp"

@@ -40,7 +40,6 @@ public class ListFragment extends BaseFragment implements MvpView {
     XRecyclerView recycleView;
     ListFragmentPresenter mListFragmentPresenter;
     ListFragmentItemAdapter listFragmentItemAdapter;
-    private IBinder iBinder;
 
     public static ListFragment newInstance() {
 
@@ -91,7 +90,9 @@ public class ListFragment extends BaseFragment implements MvpView {
 
     @Override
     protected void unBind() {
-        mListFragmentPresenter.closeMediaAndStopService();
+        // TODO: 2017/6/14 暂停播放还没关
+//        mListFragmentPresenter.closeMediaAndStopService();
+        mListFragmentPresenter.detachView(this);
         mListFragmentPresenter.disattachHandler();
     }
 

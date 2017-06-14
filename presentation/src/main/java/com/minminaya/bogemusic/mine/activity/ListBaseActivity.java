@@ -1,5 +1,6 @@
 package com.minminaya.bogemusic.mine.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -17,6 +18,7 @@ import com.minminaya.bogemusic.base.BaseActivity;
 import com.minminaya.bogemusic.mine.fragment.ListFragment;
 import com.minminaya.bogemusic.mine.presenter.ListBaseActivityPresenter;
 import com.minminaya.bogemusic.mvp.view.MvpView;
+import com.minminaya.bogemusic.play.activity.MusicPlayActivity;
 import com.minminaya.bogemusic.utils.localmusic.LocalMusicUtil;
 
 import butterknife.Bind;
@@ -40,7 +42,7 @@ public class ListBaseActivity extends BaseActivity implements MvpView {
     ImageView miniAlbum;
     @Bind(R.id.mini_play)
     CircleImageView miniPlay;
-//    @Bind(R.id.play_circle_progress)
+    //    @Bind(R.id.play_circle_progress)
 //    DonutProgress playCircleProgress;
     @Bind(R.id.mini_favorite)
     ImageView miniFavorite;
@@ -49,7 +51,8 @@ public class ListBaseActivity extends BaseActivity implements MvpView {
     @Bind(R.id.artist_name)
     TextView artistName;
 
-    ListBaseActivityPresenter mListBaseActivityPresenter  = null;
+    ListBaseActivityPresenter mListBaseActivityPresenter = null;
+
     @Override
     public void unBind() {
 
@@ -73,7 +76,7 @@ public class ListBaseActivity extends BaseActivity implements MvpView {
 
         mListBaseActivityPresenter = new ListBaseActivityPresenter();
         mListBaseActivityPresenter.attachView(this);
-}
+    }
 
     @Override
     public int getContentView() {
@@ -89,6 +92,8 @@ public class ListBaseActivity extends BaseActivity implements MvpView {
             case R.id.btn_search:
                 break;
             case R.id.mini_album:
+                Intent intent = new Intent(this, MusicPlayActivity.class);
+                startActivity(intent);
                 break;
             case R.id.mini_favorite:
                 break;
