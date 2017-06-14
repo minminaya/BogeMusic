@@ -2,16 +2,19 @@ package com.minminaya.bogemusic.finder.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.minminaya.bogemusic.App;
 import com.minminaya.bogemusic.R;
 import com.minminaya.bogemusic.base.BaseFragment;
-import com.minminaya.bogemusic.finder.activity.FinderActivity;
 import com.minminaya.bogemusic.mine.activity.ListBaseActivity;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -20,12 +23,13 @@ import butterknife.OnClick;
 
 public class MineFragment extends BaseFragment {
 
-    @Bind(R.id.text_local_music)
-    TextView textLocalMusic;
+
     @Bind(R.id.text_last_play)
-    TextView textLastPlay;
+    LinearLayout textLastPlay;
     @Bind(R.id.text_my_favorite)
-    TextView textMyFavorite;
+    LinearLayout textMyFavorite;
+    @Bind(R.id.text_local_music)
+    LinearLayout textLocalMusic;
 
     public static MineFragment newInstance() {
 
@@ -79,4 +83,7 @@ public class MineFragment extends BaseFragment {
                 break;
         }
     }
+
+
+
 }

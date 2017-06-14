@@ -204,6 +204,7 @@ public class MusicPlayActivity extends BaseActivity implements MvpView {
                 case C.InstantForBroadcastReceiverForMusicServiceData.CURRENT_SONG_POSITION_FLAG:
                     int o = intent.getIntExtra(C.InstantForBroadcastReceiverForMusicServiceData.CURRENT_SONG_POSITION, 100);
                     tvCurrentBar.setText(time.format(o));
+                    seekbar.setProgress(o);
                     break;
             }
         }

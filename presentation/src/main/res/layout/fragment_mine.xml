@@ -9,44 +9,64 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
-            android:foreground="?android:attr/selectableItemBackground"
+
+        <LinearLayout
             android:id="@+id/text_local_music"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="18dp"
-            android:layout_marginStart="23dp"
-            android:layout_marginTop="18dp"
-            android:text="本地音乐"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="18dp"
+                android:layout_marginStart="23dp"
+                android:layout_marginTop="18dp"
+                android:text="本地音乐"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+        </LinearLayout>
 
         <include layout="@layout/divider_view" />
 
-        <TextView
-            android:foreground="?android:attr/selectableItemBackground"
+        <LinearLayout
             android:id="@+id/text_last_play"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="18dp"
-            android:layout_marginStart="23dp"
-            android:layout_marginTop="18dp"
-            android:text="最近播放"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="18dp"
+                android:layout_marginStart="23dp"
+                android:layout_marginTop="18dp"
+                android:text="最近播放"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+        </LinearLayout>
 
         <include layout="@layout/divider_view" />
 
-        <TextView
-            android:foreground="?android:attr/selectableItemBackground"
+        <LinearLayout
             android:id="@+id/text_my_favorite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="23dp"
-            android:layout_marginTop="18dp"
-            android:text="我的收藏"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="23dp"
+                android:layout_marginTop="18dp"
+                android:text="我的收藏"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+        </LinearLayout>
+        <include layout="@layout/divider_view" />
     </LinearLayout>
 
 </ScrollView>

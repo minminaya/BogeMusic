@@ -101,7 +101,7 @@ public class LocalMusicUtil {
                         if (files[i].isFile()) {
                             //如果 扫到的是文件，那么把具体路径存到songTotalPath下
                             songTotalPath[i] = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + files[i].getName();
-                            Log.e("file", files[i].getName());
+//                            Log.e("file", files[i].getName());
                         }
                     }
                 }

@@ -53,7 +53,9 @@ public class ListFragment extends BaseFragment implements MvpView {
     @Override
     public void iniView(View view) {
         //刷新内容提供器数据库
-        LocalMusicUtil.refreshcontentResolverData();
+        // TODO: 2017/6/14
+
+//        LocalMusicUtil.refreshcontentResolverData();
         mListFragmentPresenter = new ListFragmentPresenter();
         mListFragmentPresenter.attachView(this);
         mListFragmentPresenter.getSongListAndSaveSongList();
@@ -66,6 +68,24 @@ public class ListFragment extends BaseFragment implements MvpView {
         recycleView.setLayoutManager(new LinearLayoutManager(App.getINSTANCE()));
         recycleView.setAdapter(listFragmentItemAdapter);
         listFragmentItemAdapter.setmPresenter(mListFragmentPresenter);
+
+        recycleView.setLoadingListener(new XRecyclerView.LoadingListener() {
+            @Override
+            public void onRefresh() {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        LocalMusicUtil.refreshcontentResolverData();
+                    }
+                }).start();
+                recycleView.refreshComplete();
+            }
+
+            @Override
+            public void onLoadMore() {
+
+            }
+        });
     }
 
     @Override
