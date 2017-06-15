@@ -69,6 +69,10 @@ public class MusicPlayActivity extends BaseActivity implements MvpView {
     //进度条下面的当前进度文字，将毫秒化为m:ss格式
     private SimpleDateFormat time = new SimpleDateFormat("m:ss");
 
+    /**
+     *
+     *  歌曲总长
+     * */
     private int songTotalPosition;
 
     private BroadcastReceiverForMusicServiceData broadcastReceiverForMusicServiceData;
@@ -87,11 +91,14 @@ public class MusicPlayActivity extends BaseActivity implements MvpView {
 
     @Override
     public void setListeners() {
+
+
         seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            int caculatedBar;
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 if (fromUser) {
-                    musicPlayActivityPresenter.sendBroadcast(progress);
+                    caculatedBar = progress;
                 }
             }
 
@@ -102,10 +109,10 @@ public class MusicPlayActivity extends BaseActivity implements MvpView {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
+                musicPlayActivityPresenter.sendBroadcast(caculatedBar);
 
             }
         });
-//        mHandler.post(mRunnable);
     }
 
     @Override
@@ -170,18 +177,6 @@ public class MusicPlayActivity extends BaseActivity implements MvpView {
 
     }
 
-//    /**
-//     * 更新ui的runnable
-//     */
-//    private Runnable mRunnable = new Runnable() {
-//        @Override
-//        public void run() {
-//            seekbar.setProgress(mMyBinder.getPlayPosition());
-////            tvSongTotalTime.setText(time.format(mMyBinder.getPlayPosition()) + "s");
-//            mHandler.postDelayed(mRunnable, 1000);
-//        }
-//    };
-
     public class BroadcastReceiverForMusicServiceData extends BroadcastReceiver {
         public BroadcastReceiverForMusicServiceData() {
         }
@@ -196,6 +191,7 @@ public class MusicPlayActivity extends BaseActivity implements MvpView {
                     songTotalPosition = intent.getIntExtra(C.InstantForBroadcastReceiverForMusicServiceData.TOTAL_SONG_POSITION, 100);
                     String artist = intent.getStringExtra(C.InstantForBroadcastReceiverForMusicServiceData.CURRENT_SONG_TITLE);
                     String songTitle = intent.getStringExtra(C.InstantForBroadcastReceiverForMusicServiceData.CURRENT_SONG_ARTIST_TITLE);
+
                     seekbar.setMax(songTotalPosition);
                     tvSongTotalTime.setText(time.format(songTotalPosition));
                     tvSongTitle.setText(songTitle);
@@ -204,6 +200,7 @@ public class MusicPlayActivity extends BaseActivity implements MvpView {
                 case C.InstantForBroadcastReceiverForMusicServiceData.CURRENT_SONG_POSITION_FLAG:
                     int o = intent.getIntExtra(C.InstantForBroadcastReceiverForMusicServiceData.CURRENT_SONG_POSITION, 100);
                     tvCurrentBar.setText(time.format(o));
+
                     seekbar.setProgress(o);
                     break;
             }

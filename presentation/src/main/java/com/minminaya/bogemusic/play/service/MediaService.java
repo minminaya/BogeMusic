@@ -174,7 +174,7 @@ public class MediaService extends Service {
 
 
         } catch (IOException e) {
-            Log.d(TAG, "设置资源，准备阶段出错");
+//            Log.d(TAG, "设置资源，准备阶段出错");
             e.printStackTrace();
         }
     }

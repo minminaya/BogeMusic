@@ -45,7 +45,7 @@ public class ListFragmentPresenter extends BasePresenter<ListFragment> {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             myBinder = (MediaService.MyBinder) service;
-            Log.d("onServiceConnected", "Service与Activity已连接");
+//            Log.d("onServiceConnected", "Service与Activity已连接");
             myBinder.setData(list);
             myBinder.playMusic();
             mHandler.post(runnable);
@@ -81,9 +81,9 @@ public class ListFragmentPresenter extends BasePresenter<ListFragment> {
 
         DataSetUtil.writeObject(list, Environment.getExternalStorageDirectory().getAbsolutePath() + "/BogeMusic/songList", "songList");
         for (int i = 0; i < list.size(); i++) {
-            Log.e("音乐title", "音乐:" + i + ":" + list.get(i).getSongTitle() + "," + "id:" + list.get(i).getSongId() + "长度：" + list.get(i).getSongDuration() + "歌曲位置：" + list.get(i).getSongPath());
+//            Log.e("音乐title", "音乐:" + i + ":" + list.get(i).getSongTitle() + "," + "id:" + list.get(i).getSongId() + "长度：" + list.get(i).getSongDuration() + "歌曲位置：" + list.get(i).getSongPath());
         }
-        Log.e("music数据", "" + list.size());
+//        Log.e("music数据", "" + list.size());
     }
 
     /**
