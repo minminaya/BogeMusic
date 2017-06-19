@@ -6,23 +6,29 @@
     android:background="@color/gray"
     tools:context="com.minminaya.bogemusic.play.fragment.AlbumFragment">
 
+    <RelativeLayout
+        android:layout_marginTop="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="240dp"
-        android:layout_height="240dp"
-        android:layout_centerInParent="true"
-        android:src="@color/white2" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="240dp"
+            android:layout_height="240dp"
+            android:layout_centerInParent="true"
+            android:src="@color/white2" />
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="210dp"
-        android:layout_height="210dp"
-        android:layout_centerInParent="true"
-        android:src="@color/black" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="210dp"
+            android:layout_height="210dp"
+            android:layout_centerInParent="true"
+            android:src="@color/black" />
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="160dp"
-        android:layout_height="160dp"
-        android:layout_centerInParent="true"
-        android:src="@color/gray3" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/play_album"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/zjl" />
+    </RelativeLayout>
 
 </RelativeLayout>

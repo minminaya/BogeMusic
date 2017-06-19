@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,7 +19,9 @@ import com.minminaya.bogemusic.App;
 import com.minminaya.bogemusic.C;
 import com.minminaya.bogemusic.R;
 import com.minminaya.bogemusic.base.BaseActivity;
+import com.minminaya.bogemusic.mine.fragment.ListFragment;
 import com.minminaya.bogemusic.mvp.view.MvpView;
+import com.minminaya.bogemusic.play.fragment.AlbumFragment;
 import com.minminaya.bogemusic.play.presenter.MusicPlayActivityPresenter;
 
 import java.text.SimpleDateFormat;
@@ -120,6 +123,10 @@ public class MusicPlayActivity extends BaseActivity implements MvpView {
 
     @Override
     public void initView(Bundle savedInstanceState) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .add(R.id.frameLayout, AlbumFragment.newInstance())
+                .commit();
         musicPlayActivityPresenter = new MusicPlayActivityPresenter();
         musicPlayActivityPresenter.attachView(this);
 
