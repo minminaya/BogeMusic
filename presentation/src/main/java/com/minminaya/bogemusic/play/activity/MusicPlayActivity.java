@@ -68,11 +68,13 @@ public class MusicPlayActivity extends BaseActivity implements MvpView {
     private Handler mHandler = new Handler();
     //进度条下面的当前进度文字，将毫秒化为m:ss格式
     private SimpleDateFormat time = new SimpleDateFormat("m:ss");
-
     /**
-     *
-     *  歌曲总长
-     * */
+     * 是否按下seekbar
+     */
+    private boolean isTouchSeekBar = false;
+    /**
+     * 歌曲总长
+     */
     private int songTotalPosition;
 
     private BroadcastReceiverForMusicServiceData broadcastReceiverForMusicServiceData;
@@ -95,6 +97,7 @@ public class MusicPlayActivity extends BaseActivity implements MvpView {
 
         seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int caculatedBar;
+
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 if (fromUser) {
@@ -104,13 +107,13 @@ public class MusicPlayActivity extends BaseActivity implements MvpView {
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-
+                isTouchSeekBar = true;
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 musicPlayActivityPresenter.sendBroadcast(caculatedBar);
-
+                isTouchSeekBar = false;
             }
         });
     }
@@ -201,7 +204,10 @@ public class MusicPlayActivity extends BaseActivity implements MvpView {
                     int o = intent.getIntExtra(C.InstantForBroadcastReceiverForMusicServiceData.CURRENT_SONG_POSITION, 100);
                     tvCurrentBar.setText(time.format(o));
 
-                    seekbar.setProgress(o);
+                    if (!isTouchSeekBar) {
+                        //如果没有按下seekBar，那么seekbar进度条一直更新
+                        seekbar.setProgress(o);
+                    }
                     break;
             }
         }

@@ -8,6 +8,8 @@
     <color name="white">#FFFFFF</color><!--白色 -->
     <color name="ivory">#FFFFF0</color><!--象牙色 -->
     <color name="lightyellow">#FFFFE0</color><!--亮黄色 -->
+    <color name="white2">#D8D8D8</color><!--白偏灰 -->
+    <color name="gray3">#666666</color><!--白偏灰 -->
     <color name="yellow">#FFFF00</color><!--黄色 -->
     <color name="snow">#FFFAFA</color><!--雪白色 -->
     <color name="floralwhite">#FFFAF0</color><!--花白色 -->

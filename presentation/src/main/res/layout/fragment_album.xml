@@ -1,0 +1,28 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray"
+    tools:context="com.minminaya.bogemusic.play.fragment.AlbumFragment">
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="240dp"
+        android:layout_height="240dp"
+        android:layout_centerInParent="true"
+        android:src="@color/white2" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="210dp"
+        android:layout_height="210dp"
+        android:layout_centerInParent="true"
+        android:src="@color/black" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_centerInParent="true"
+        android:src="@color/gray3" />
+
+</RelativeLayout>
