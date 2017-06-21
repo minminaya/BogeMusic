@@ -58,6 +58,14 @@ public class MediaService extends Service {
             if (!mMediaPlayer.isPlaying()) {
                 //如果还没开始播放，就开始
                 mMediaPlayer.start();
+                mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        // 发送广播给LrcFragment表示播放完了
+                        nextMusic();//下一首
+                        sendBroadCastDataForLrcFragment(true);
+                    }
+                });
             }
         }
 
@@ -214,6 +222,7 @@ public class MediaService extends Service {
         public void run() {
             Intent i = new Intent(C.InstantForBroadcastReceiverForMusicServiceData.ACTION);
             i.putExtra(C.InstantForBroadcastReceiverForMusicServiceData.MUSIC_PLAY_KEY_2, C.InstantForBroadcastReceiverForMusicServiceData.CURRENT_SONG_POSITION_FLAG);
+
             i.putExtra(C.InstantForBroadcastReceiverForMusicServiceData.CURRENT_SONG_POSITION, myBinder.getPlayPosition());
             App.getINSTANCE().sendBroadcast(i);
 
@@ -221,4 +230,17 @@ public class MediaService extends Service {
             mHandler.postDelayed(mRunnable, 1000);
         }
     };
+
+    /**
+     * 给fragment发送俩个数据
+     */
+    private void sendBroadCastDataForLrcFragment(boolean isPlayCompletion) {
+        Intent intent1 = new Intent(C.InstantForBroadcastReceiverForMusicPlaySeekBar.ACTION);
+        intent1.putExtra(C.InstantForBroadcastReceiverForMusicPlaySeekBar.LRC_VIEW_KEY_1, C.InstantForBroadcastReceiverForMusicPlaySeekBar.LRC_VIEW_FLAG_2);
+        //下面是数据
+        intent1.putExtra(C.InstantForBroadcastReceiverForMusicPlaySeekBar.LRC_VIEW_PLAY_IS_PLAY_COMPLETION, isPlayCompletion);
+        App.getINSTANCE().sendBroadcast(intent1);
+
+
+    }
 }

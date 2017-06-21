@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -22,6 +24,7 @@ import com.minminaya.bogemusic.base.BaseActivity;
 import com.minminaya.bogemusic.mine.fragment.ListFragment;
 import com.minminaya.bogemusic.mvp.view.MvpView;
 import com.minminaya.bogemusic.play.fragment.AlbumFragment;
+import com.minminaya.bogemusic.play.fragment.LrcFragment;
 import com.minminaya.bogemusic.play.presenter.MusicPlayActivityPresenter;
 
 import java.text.SimpleDateFormat;
@@ -80,6 +83,8 @@ public class MusicPlayActivity extends BaseActivity implements MvpView {
      */
     private int songTotalPosition;
 
+    FragmentManager fragmentManager;
+
     private BroadcastReceiverForMusicServiceData broadcastReceiverForMusicServiceData;
 
     @Override
@@ -105,7 +110,11 @@ public class MusicPlayActivity extends BaseActivity implements MvpView {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 if (fromUser) {
                     caculatedBar = progress;
+                    sendBroadCastDataForLrcFragment(progress, true);
                 }
+
+                sendBroadCastDataForLrcFragment(progress, fromUser);
+
             }
 
             @Override
@@ -121,9 +130,23 @@ public class MusicPlayActivity extends BaseActivity implements MvpView {
         });
     }
 
+    /**
+     * 给fragment发送俩个数据
+     */
+    private void sendBroadCastDataForLrcFragment(int progress, boolean fromUser) {
+        Intent intent1 = new Intent(C.InstantForBroadcastReceiverForMusicPlaySeekBar.ACTION);
+        intent1.putExtra(C.InstantForBroadcastReceiverForMusicPlaySeekBar.LRC_VIEW_KEY_1, C.InstantForBroadcastReceiverForMusicPlaySeekBar.LRC_VIEW_FLAG);
+        //下面是数据
+        intent1.putExtra(C.InstantForBroadcastReceiverForMusicPlaySeekBar.LRC_VIEW_PLAY_CURRENT_POSITION, progress);
+        intent1.putExtra(C.InstantForBroadcastReceiverForMusicPlaySeekBar.LRC_VIEW_PLAY_ISFROMUSER, fromUser);
+        App.getINSTANCE().sendBroadcast(intent1);
+
+
+    }
+
     @Override
     public void initView(Bundle savedInstanceState) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .add(R.id.frameLayout, AlbumFragment.newInstance())
                 .commit();
@@ -156,6 +179,10 @@ public class MusicPlayActivity extends BaseActivity implements MvpView {
             case R.id.btn_search:
                 break;
             case R.id.frameLayout:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.frameLayout, LrcFragment.newInstance())
+                        .commit();
+//                switchContent(AlbumFragment.newInstance(), LrcFragment.newInstance());
                 break;
             case R.id.tv_current_bar:
                 break;
@@ -216,6 +243,20 @@ public class MusicPlayActivity extends BaseActivity implements MvpView {
                         seekbar.setProgress(o);
                     }
                     break;
+            }
+        }
+    }
+
+    private Fragment mContent;
+
+    public void switchContent(Fragment from, Fragment to) {
+        if (mContent != to) {
+            mContent = to;
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            if (!to.isAdded()) {    // 先判断是否被add过
+                transaction.hide(from).add(R.id.frameLayout, to).commit(); // 隐藏当前的fragment，add下一个到Activity中
+            } else {
+                transaction.hide(from).show(to).commit(); // 隐藏当前的fragment，显示下一个
             }
         }
     }

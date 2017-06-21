@@ -34,4 +34,23 @@ public class C {
         public static final int CURRENT_SONG_POSITION_FLAG = 3;
     }
 
+    public static final class InstantForBroadcastReceiverForMusicPlaySeekBar{
+        public static final String ACTION = "ACTION_1";
+
+        public static final String LRC_VIEW_KEY_1 = "lrc_view_key_1";
+        public static final int LRC_VIEW_FLAG = 33232;
+
+        public static final int LRC_VIEW_FLAG_2 = 332322221;
+
+        public static final String LRC_VIEW_PLAY_CURRENT_POSITION = "lrc_view_play_current_position";
+        public static final String LRC_VIEW_PLAY_ISFROMUSER = "lrc_view_play_is_from_user";
+
+        public static final String LRC_VIEW_PLAY_IS_PLAY_COMPLETION = "lrc_view_play_is_play_completion";
+
+
+
+
+
+    }
+
 }
