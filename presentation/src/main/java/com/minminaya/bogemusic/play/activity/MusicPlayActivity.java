@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -82,7 +83,8 @@ public class MusicPlayActivity extends BaseActivity implements MvpView {
      * 歌曲总长
      */
     private int songTotalPosition;
-
+    /**按钮是否是play*/
+    private boolean isBtnPlay = true;
     FragmentManager fragmentManager;
 
     private BroadcastReceiverForMusicServiceData broadcastReceiverForMusicServiceData;
@@ -96,7 +98,6 @@ public class MusicPlayActivity extends BaseActivity implements MvpView {
 
     @Override
     public void bind() {
-
     }
 
     @Override
@@ -195,8 +196,21 @@ public class MusicPlayActivity extends BaseActivity implements MvpView {
                 sendBroadcast(intent);
                 break;
             case R.id.btn_play_or_pause:
+
                 intent.putExtra(C.InstantForReceiver.MUSIC_PLAY_KEY, C.InstantForReceiver.PLAY_OR_PAUSE);
                 sendBroadcast(intent);
+
+                //动态切换按钮图案
+                if(isBtnPlay){
+                    Drawable btnPauseIcon = getResources().getDrawable(R.drawable.icon_play_pause);
+                    btnPlayOrPause.setBackground(btnPauseIcon);
+                    isBtnPlay = false;
+                }else {
+                    Drawable btnPlayIcon = getResources().getDrawable(R.drawable.icon_play_start);
+                    btnPlayOrPause.setBackground(btnPlayIcon);
+                    isBtnPlay = true;
+                }
+                AlbumFragment.newInstance().StartOrPauseAnim();
                 break;
             case R.id.btn_next:
                 intent.putExtra(C.InstantForReceiver.MUSIC_PLAY_KEY, C.InstantForReceiver.BUTTON_NEXT);
@@ -259,6 +273,16 @@ public class MusicPlayActivity extends BaseActivity implements MvpView {
                 transaction.hide(from).show(to).commit(); // 隐藏当前的fragment，显示下一个
             }
         }
+    }
+
+    /**
+     * 转换fragment
+     **/
+    public void switchFragment() {
+        fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.frameLayout, AlbumFragment.newInstance())
+                .commit();
     }
 }
 

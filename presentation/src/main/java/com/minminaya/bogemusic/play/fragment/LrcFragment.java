@@ -80,16 +80,17 @@ public class LrcFragment extends BaseFragment {
 
     @Override
     public void setListeners() {
+        final MusicPlayActivity musicPlayActivity = (MusicPlayActivity) getActivity();
         lrcview.setOnLrcClickListener(new LrcView.OnLrcClickListener() {
             @Override
             public void onClick() {
-
+                musicPlayActivity.switchFragment();
             }
         });
         lrcview.setOnSeekToListener(new LrcView.OnSeekToListener() {
             @Override
             public void onSeekTo(int progress) {
-                sendBroadcast(progress);
+                sendBroadcastForUpdateSongPosition(progress);
             }
         });
 
@@ -107,12 +108,13 @@ public class LrcFragment extends BaseFragment {
     }
 
     /**
-     * 获取歌词List集合
+     * 获取歌词List集合，歌词路径，只要设置在这里面
      *
      * @return
      */
     private List<LrcRow> getLrcRows() {
         List<LrcRow> rows = null;
+        // TODO: 2017/6/21 动态设置歌词
         InputStream is = getResources().openRawResource(R.raw.hs);
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
         String line;
@@ -132,6 +134,10 @@ public class LrcFragment extends BaseFragment {
     private int mCurrentProgress;
     private boolean isFromUser;
 
+
+    /**
+     * 用于接受来自别的线程的数据的广播接收器
+     */
     public class BroadcastReceiverForMusicPlaySeekBar extends BroadcastReceiver {
         public BroadcastReceiverForMusicPlaySeekBar() {
 
@@ -150,7 +156,7 @@ public class LrcFragment extends BaseFragment {
                     break;
                 case C.InstantForBroadcastReceiverForMusicPlaySeekBar.LRC_VIEW_FLAG_2:
                     boolean isPlayCompletion = intent.getBooleanExtra(C.InstantForBroadcastReceiverForMusicPlaySeekBar.LRC_VIEW_PLAY_IS_PLAY_COMPLETION, true);
-                    if(isPlayCompletion){
+                    if (isPlayCompletion) {
                         lrcview.reset();
                         // TODO: 2017/6/21 重新设置歌词
                         lrcview.setLrcRows(getLrcRows());
@@ -162,7 +168,11 @@ public class LrcFragment extends BaseFragment {
         }
     }
 
-    public void sendBroadcast(int progress){
+    /**
+     * 发到musicService用于更新播放位置
+     * @param progress 最新的播放位置
+     */
+    public void sendBroadcastForUpdateSongPosition(int progress) {
         Intent intent = new Intent(C.InstantForReceiver.ACTION);
         intent.putExtra(C.InstantForReceiver.MUSIC_PLAY_KEY, C.InstantForReceiver.UPDATA_SONG_POSITION_FlAG);
         intent.putExtra(C.InstantForReceiver.UPDATA_SONG_POSITION, progress);

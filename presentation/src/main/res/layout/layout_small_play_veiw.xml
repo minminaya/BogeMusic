@@ -10,7 +10,9 @@
         android:layout_height="40dp"
         android:layout_centerVertical="true"
         android:layout_marginStart="15dp"
-        android:src="@drawable/icon_mini_music_album" />
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:src="@drawable/zjl" />
 
     <include
         layout="@layout/play_mini_circle"
@@ -27,26 +29,26 @@
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:layout_marginEnd="15dp"
-        android:src="@drawable/icon_mini_favorite" />
+        android:src="@drawable/icon_play_favorite_white" />
 
     <TextView
         android:id="@+id/song_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/mini_album"
+        android:layout_marginStart="22dp"
+        android:layout_toEndOf="@+id/mini_album"
         android:text="歌曲名"
         android:textColor="@color/white"
-        android:textSize="20sp"
-        android:layout_alignTop="@+id/mini_album"
-        android:layout_toEndOf="@+id/mini_album"
-        android:layout_marginStart="22dp" />
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/artist_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/mini_album"
+        android:layout_alignStart="@+id/song_name"
         android:text="歌手名"
         android:textColor="@color/gray"
-        android:textSize="14sp"
-        android:layout_alignBottom="@+id/mini_album"
-        android:layout_alignStart="@+id/song_name" />
+        android:textSize="14sp" />
 </RelativeLayout>

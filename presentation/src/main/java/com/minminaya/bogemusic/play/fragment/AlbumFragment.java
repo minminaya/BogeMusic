@@ -13,13 +13,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AlbumFragment extends BaseFragment {
 
-
+    private static final AlbumFragment fragment = new AlbumFragment();
     @Bind(R.id.play_album)
     CircleImageView playAlbumView;
     ObjectAnimator anim;
 
     public static AlbumFragment newInstance() {
-        AlbumFragment fragment = new AlbumFragment();
+//        fragment = new AlbumFragment();
         return fragment;
     }
 
@@ -55,6 +55,23 @@ public class AlbumFragment extends BaseFragment {
 
     @Override
     protected void unBind() {
+
+    }
+
+    boolean isAnimRunning = true;
+
+
+    /**
+     * 开始或者暂停专辑动画
+     */
+    public void StartOrPauseAnim() {
+        if (isAnimRunning) {
+            anim.pause();
+            isAnimRunning = false;
+        } else {
+            anim.resume();
+            isAnimRunning = true;
+        }
 
     }
 }

@@ -162,6 +162,10 @@ public class MediaService extends Service {
          */
         public void seekToPositon(int msec) {
             mMediaPlayer.seekTo(msec);
+            if(!mMediaPlayer.isPlaying()){
+
+                mMediaPlayer.start();//同时继续播放
+            }
         }
 
     }
@@ -232,7 +236,7 @@ public class MediaService extends Service {
     };
 
     /**
-     * 给fragment发送俩个数据
+     * 给LrcFragment播放完成通知
      */
     private void sendBroadCastDataForLrcFragment(boolean isPlayCompletion) {
         Intent intent1 = new Intent(C.InstantForBroadcastReceiverForMusicPlaySeekBar.ACTION);
