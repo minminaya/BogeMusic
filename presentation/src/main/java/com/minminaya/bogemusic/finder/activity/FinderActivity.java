@@ -119,6 +119,7 @@ public class FinderActivity extends BaseActivity
             case R.id.nav_view:
                 break;
             case R.id.btn_setting:
+                mDrawerLayout.openDrawer(GravityCompat.START);
                 break;
             case R.id.btn_search:
                 break;

@@ -84,9 +84,10 @@ public class MusicPlayActivity extends BaseActivity implements MvpView {
      */
     private int songTotalPosition;
     /**按钮是否是play*/
-    private boolean isBtnPlay = true;
+    private boolean isBtnPlay = false;
     FragmentManager fragmentManager;
-
+    /**当前是否第一次发送更新数据的广播*/
+    boolean isFirstSendBroadCast = false;
     private BroadcastReceiverForMusicServiceData broadcastReceiverForMusicServiceData;
 
     @Override
@@ -98,6 +99,7 @@ public class MusicPlayActivity extends BaseActivity implements MvpView {
 
     @Override
     public void bind() {
+
     }
 
     @Override
@@ -159,6 +161,9 @@ public class MusicPlayActivity extends BaseActivity implements MvpView {
         IntentFilter intentFilter = new IntentFilter(C.InstantForBroadcastReceiverForMusicServiceData.ACTION);
         registerReceiver(broadcastReceiverForMusicServiceData, intentFilter);
         Log.e("MusicPlayActivity", "广播注册成功");
+
+        seekbar.setMax(10000);
+        seekbar.setProgress(0);
     }
 
     @Override
@@ -172,6 +177,7 @@ public class MusicPlayActivity extends BaseActivity implements MvpView {
         Intent intent = new Intent(C.InstantForReceiver.ACTION);
         switch (view.getId()) {
             case R.id.btn_exit:
+                onBackPressed();
                 break;
             case R.id.btn_song_title:
                 break;
@@ -229,6 +235,8 @@ public class MusicPlayActivity extends BaseActivity implements MvpView {
     }
 
     public class BroadcastReceiverForMusicServiceData extends BroadcastReceiver {
+        private boolean isFirstRecevered = true;
+
         public BroadcastReceiverForMusicServiceData() {
         }
 
@@ -250,6 +258,17 @@ public class MusicPlayActivity extends BaseActivity implements MvpView {
                     break;
                 case C.InstantForBroadcastReceiverForMusicServiceData.CURRENT_SONG_POSITION_FLAG:
                     int o = intent.getIntExtra(C.InstantForBroadcastReceiverForMusicServiceData.CURRENT_SONG_POSITION, 100);
+                    if(isFirstRecevered){
+                        //用于标记是否是第一次收到进度数据
+                        isFirstRecevered = false;
+                        isFirstSendBroadCast = true;
+                    }
+                    if(isFirstSendBroadCast){
+                        Intent intent2 = new Intent(C.InstantForReceiver.ACTION);
+                        intent2.putExtra(C.InstantForReceiver.MUSIC_PLAY_KEY, C.InstantForReceiver.UPDATA_SONG_DATA_FLAG);
+                        sendBroadcast(intent2);
+                        isFirstSendBroadCast = false;
+                    }
                     tvCurrentBar.setText(time.format(o));
 
                     if (!isTouchSeekBar) {

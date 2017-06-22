@@ -16,6 +16,7 @@ public class C {
         public static final int BUTTON_NEXT = 1;
         public static final int BUTTON_LAST = 2;
         public static final int UPDATA_SONG_POSITION_FlAG = 110001;
+        public static final int UPDATA_SONG_DATA_FLAG = 1100012344;
 
     }
 

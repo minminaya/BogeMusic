@@ -34,11 +34,14 @@ public class ListFragment extends BaseFragment implements MvpView {
     ListFragmentPresenter mListFragmentPresenter;
     ListFragmentItemAdapter listFragmentItemAdapter;
 
+    private static ListFragment fragment;
     public static ListFragment newInstance() {
-
+        if(fragment == null){
+            fragment = new ListFragment();
+        }else {
+            return fragment;
+        }
         Bundle args = new Bundle();
-
-        ListFragment fragment = new ListFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -117,4 +120,5 @@ public class ListFragment extends BaseFragment implements MvpView {
     public void setSongListToAdapter(List<LocalMusicModel> list) {
         listFragmentItemAdapter.setSongList(list);
     }
+
 }

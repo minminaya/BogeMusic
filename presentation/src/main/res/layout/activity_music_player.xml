@@ -75,7 +75,7 @@
         android:clickable="true"
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="410dp"
         android:layout_marginTop="70dp"
         android:background="@color/gray" />
 
@@ -107,7 +107,7 @@
                 android:layout_height="30dp"
                 android:layout_centerInParent="true"
                 android:max="10000"
-                android:progress="20"
+                android:progress="0"
                 android:thumb="@drawable/seek" />
 
             <TextView
@@ -153,7 +153,7 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_centerInParent="true"
-                android:background="@drawable/icon_play_start" />
+                android:background="@drawable/icon_play_pause" />
 
             <Button
                 android:foreground="?android:attr/selectableItemBackground"

@@ -173,6 +173,10 @@ public class ListFragmentPresenter extends BasePresenter<ListFragment> {
                     int position = intent.getIntExtra(C.InstantForReceiver.UPDATA_SONG_POSITION, 100);
                     myBinder.seekToPositon(position);
                     break;
+                case C.InstantForReceiver.UPDATA_SONG_DATA_FLAG:
+                    //发动更新数据的广播给MusicPlayActivity
+                    myBinder.resendSongTotalBroadcast();
+                    break;
             }
         }
     }

@@ -11,7 +11,7 @@
         android:layout_marginStart="1dp"
         android:layout_width="33dp"
         android:layout_height="33dp"
-        android:src="@drawable/icon_play_start" />
+        android:background="@drawable/icon_play_start" />
 
     <com.github.lzyzsd.circleprogress.DonutProgress
         android:id="@+id/play_circle_progress"

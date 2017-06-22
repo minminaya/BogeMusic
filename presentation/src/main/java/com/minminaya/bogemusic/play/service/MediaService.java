@@ -86,6 +86,7 @@ public class MediaService extends Service {
         public void seekSong(int position) {
             mMediaPlayer.reset();
             iniMediaPlayerFile(position);
+            i = position;//存当前播放的歌曲
             playMusic();
         }
 
@@ -162,10 +163,17 @@ public class MediaService extends Service {
          */
         public void seekToPositon(int msec) {
             mMediaPlayer.seekTo(msec);
-            if(!mMediaPlayer.isPlaying()){
+            if (!mMediaPlayer.isPlaying()) {
 
-                mMediaPlayer.start();//同时继续播放
+//                mMediaPlayer.start();//同时继续播放
             }
+        }
+
+        /**
+         * 重新发送当前播放的数据给MusicPlayActivity
+         */
+        public void resendSongTotalBroadcast() {
+            sendSongTotalBroadcast(i);
         }
 
     }
@@ -199,7 +207,7 @@ public class MediaService extends Service {
             @Override
             public void run() {
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(200);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
