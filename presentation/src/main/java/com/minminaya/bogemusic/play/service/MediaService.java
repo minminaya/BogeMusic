@@ -207,7 +207,9 @@ public class MediaService extends Service {
             @Override
             public void run() {
                 try {
-                    Thread.sleep(200);
+                    Thread.sleep(200
+
+                    );
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

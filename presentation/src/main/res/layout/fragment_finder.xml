@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -10,6 +11,7 @@
         android:orientation="vertical">
 
         <FrameLayout
+            android:id="@+id/frameLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -20,10 +22,88 @@
 
             <com.shizhefei.view.indicator.FixedIndicatorView
                 android:id="@+id/banner_indicator"
-                android:layout_width="match_parent"
+                android:layout_width="250dp"
                 android:layout_height="30dp"
-                android:layout_gravity="end|bottom" />
+                android:layout_gravity="center|bottom" />
         </FrameLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/top"
+                android:layout_width="66dp"
+                android:layout_height="66dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="33dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/icon_top"
+                app:civ_border_color="@color/black"
+                app:civ_border_width="4dp" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/song_list"
+                android:layout_width="66dp"
+                android:layout_height="66dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/icon_song_list"
+                app:civ_border_color="@color/black"
+                app:civ_border_width="4dp" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/recommend"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="33dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/icon_recommend" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="66dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="39dp"
+                android:text="排行榜"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="2dp"
+                android:text=" 歌单"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <TextView
+
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="42dp"
+                android:text="推荐"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="32dp" />
+
+        <include
+            layout="@layout/song_listview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
     </LinearLayout>
 
 </ScrollView>
