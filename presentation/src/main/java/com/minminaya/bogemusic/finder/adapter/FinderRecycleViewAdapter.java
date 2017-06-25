@@ -11,6 +11,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.minminaya.bogemusic.App;
 import com.minminaya.bogemusic.R;
+import com.minminaya.data.api.ApiMethodString;
+import com.minminaya.data.http.NetWork;
+import com.minminaya.data.model.apimodel.SongAllInfo;
 import com.minminaya.data.model.apimodel.SongList;
 
 import java.util.ArrayList;
@@ -18,6 +21,10 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by Niwa on 2017/6/25.
@@ -36,10 +43,6 @@ public class FinderRecycleViewAdapter extends RecyclerView.Adapter<FinderRecycle
     }
 
     public FinderRecycleViewAdapter() {
-//        songList.add(new SongList("1"));
-//        songList.add(new SongList("2"));
-//        songList.add(new SongList("3"));
-//        songList.add(new SongList("4"));
     }
 
     @Override
@@ -50,10 +53,28 @@ public class FinderRecycleViewAdapter extends RecyclerView.Adapter<FinderRecycle
     }
 
     @Override
-    public void onBindViewHolder(ViewHolderA holder, int position) {
-            Glide.with(App.getINSTANCE()).load(songList.get(position).getPicBig()).into(holder.songImg);
+    public void onBindViewHolder(ViewHolderA holder, final int position) {
+        Glide.with(App.getINSTANCE()).load(songList.get(position).getPicBig()).into(holder.songImg);
         holder.songTitle.setText(songList.get(position).getTitle());
-//        Log.e("observer", "onBindViewHolder" + songList.get(0).getTitle());
+        holder.songImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getSongInfo(songList.get(position).getSongId());
+            }
+        });
+    }
+
+    /**
+     *  请求网络获取歌曲数据信息
+     *
+     * */
+    private void getSongInfo(String songId) {
+        NetWork.getMusicApi()
+                .loadSongInfo(ApiMethodString.SONG_INFO_FLAG, songId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+
 
     }
 
@@ -73,5 +94,28 @@ public class FinderRecycleViewAdapter extends RecyclerView.Adapter<FinderRecycle
             ButterKnife.bind(this, itemView);
         }
     }
+
+
+    Observer<SongAllInfo> observer = new Observer<SongAllInfo>() {
+        @Override
+        public void onSubscribe(Disposable d) {
+
+        }
+
+        @Override
+        public void onNext(SongAllInfo value) {
+            Log.e("FinderAdapter", "" + value.getSonginfo().getTitle());
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            e.printStackTrace();
+        }
+
+        @Override
+        public void onComplete() {
+
+        }
+    };
 
 }

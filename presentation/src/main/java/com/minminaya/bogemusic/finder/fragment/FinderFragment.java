@@ -17,6 +17,7 @@ import com.minminaya.bogemusic.R;
 import com.minminaya.bogemusic.base.BaseFragment;
 import com.minminaya.bogemusic.finder.adapter.FinderRecycleViewAdapter;
 import com.minminaya.bogemusic.finder.adapter.IndicatorAdapter;
+import com.minminaya.data.api.ApiMethodString;
 import com.minminaya.data.http.NetWork;
 import com.minminaya.data.model.apimodel.MusicTopModel;
 import com.minminaya.data.model.apimodel.SongList;
@@ -28,7 +29,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -160,7 +160,7 @@ public class FinderFragment extends BaseFragment {
 
     public void refreshBannerData() {
         NetWork.getMusicApi()
-                .loadMusicTopContentAndInfo("baidu.ting.billboard.billList", 1, 21, 0)
+                .loadMusicTopContentAndInfo(ApiMethodString.MUSIC_TOP_FLAG, 1, 21, 0)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);

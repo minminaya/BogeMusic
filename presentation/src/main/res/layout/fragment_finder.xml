@@ -36,6 +36,8 @@
             android:layout_height="60dp">
 
             <ImageView
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
                 android:id="@+id/top"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
@@ -48,6 +50,8 @@
                 android:src="@drawable/icon_top_1" />
 
             <ImageView
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
                 android:id="@+id/song_list"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
@@ -55,6 +59,8 @@
                 android:src="@drawable/icon_song_list_1" />
 
             <ImageView
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
                 android:id="@+id/recommend"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
@@ -143,7 +149,7 @@
             android:visibility="gone"
             android:id="@+id/finder_recycle_view"
             android:layout_width="match_parent"
-            android:layout_height="940dp" />
+            android:layout_height="1050dp" />
 
     </LinearLayout>
 

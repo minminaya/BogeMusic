@@ -4,6 +4,7 @@
     android:layout_height="wrap_content">
 
     <ImageView
+        android:foreground="?android:attr/selectableItemBackground"
         android:id="@+id/song_img"
         android:layout_width="110dp"
         android:layout_height="110dp"

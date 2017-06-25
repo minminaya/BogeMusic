@@ -33,6 +33,10 @@
             android:name=".play.activity.MusicPlayActivity"
             android:launchMode="singleInstance"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".finder.activity.WebSongListActivity"
+            android:launchMode="singleInstance"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <service android:name=".play.service.MediaService" />
 

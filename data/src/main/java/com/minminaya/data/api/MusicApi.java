@@ -1,6 +1,7 @@
 package com.minminaya.data.api;
 
 import com.minminaya.data.model.apimodel.MusicTopModel;
+import com.minminaya.data.model.apimodel.SongAllInfo;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -13,17 +14,26 @@ import retrofit2.http.Query;
 public interface MusicApi {
 
     /**
-     *  获取不同榜单中歌曲列表及榜单信息
+     * 获取不同榜单中歌曲列表及榜单信息
      *
-     *  @param type 不同榜单  1-新歌榜,2-热歌榜,11-摇滚榜,12-爵士,16-流行,21-欧美金曲榜,22-经典老歌榜,23-情歌对唱榜,24-影视金曲榜,25-网络歌曲榜
-     *  @param size 返回榜单中歌曲条目数量
-     *  @param offset 偏移量-----(第几页)
-     *
-     * */
+     * @param type   不同榜单  1-新歌榜,2-热歌榜,11-摇滚榜,12-爵士,16-流行,21-欧美金曲榜,22-经典老歌榜,23-情歌对唱榜,24-影视金曲榜,25-网络歌曲榜
+     * @param size   返回榜单中歌曲条目数量
+     * @param offset 偏移量-----(第几页)
+     */
     @GET("ting")
     Observable<MusicTopModel> loadMusicTopContentAndInfo(
             @Query("method") String method,
             @Query("type") Integer type,
             @Query("size") Integer size,
             @Query("offset") Integer offset);
+
+    /**
+     * 获取指定歌曲的信息及播放数据
+     *
+     * @param songid 指定歌曲的id
+     */
+    @GET("ting")
+    Observable<SongAllInfo> loadSongInfo(
+            @Query("method") String method,
+            @Query("songid") String songid);
 }
