@@ -3,6 +3,7 @@ package com.minminaya.bogemusic.finder.adapter;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.minminaya.bogemusic.App;
 import com.shizhefei.view.indicator.IndicatorViewPager;
@@ -11,9 +12,9 @@ import com.shizhefei.view.indicator.IndicatorViewPager;
  * Created by Niwa on 2017/5/26.
  */
 
-public class IndicatorAdapter extends IndicatorViewPager.IndicatorViewPagerAdapter{
+public class IndicatorAdapter extends IndicatorViewPager.IndicatorViewPagerAdapter {
 
-    private int[] images ;
+    private int[] images;
 
     public IndicatorAdapter(int[] images) {
         this.images = images;
@@ -26,21 +27,27 @@ public class IndicatorAdapter extends IndicatorViewPager.IndicatorViewPagerAdapt
 
     @Override
     public View getViewForTab(int position, View convertView, ViewGroup container) {
-        if(convertView == null){
+        if (convertView == null) {
             convertView = new View(container.getContext());
         }
         return convertView;
     }
 
     @Override
-    public View getViewForPage(int position, View convertView, ViewGroup container) {
-        if(convertView == null){
+    public View getViewForPage(final int position, View convertView, ViewGroup container) {
+        if (convertView == null) {
             convertView = new ImageView(App.getINSTANCE());
             convertView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         }
         ImageView imageView = (ImageView) convertView;
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         imageView.setImageResource(images[position]);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(App.getINSTANCE(), "当前view是：" + position, Toast.LENGTH_SHORT).show();
+            }
+        });
         return convertView;
     }
 }

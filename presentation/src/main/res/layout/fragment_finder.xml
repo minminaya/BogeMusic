@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.minminaya.bogemusic.widget.view.MyScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <LinearLayout
@@ -27,39 +27,45 @@
                 android:layout_gravity="center|bottom" />
         </FrameLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp" />
+
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="60dp">
 
-            <de.hdodenhof.circleimageview.CircleImageView
+            <ImageView
                 android:id="@+id/top"
-                android:layout_width="66dp"
-                android:layout_height="66dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="33dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/icon_top"
-                app:civ_border_color="@color/black"
-                app:civ_border_width="4dp" />
+                android:paddingEnd="1dp"
+                android:paddingStart="1dp"
+                android:paddingTop="6dp"
+                android:src="@drawable/icon_top_1" />
 
-            <de.hdodenhof.circleimageview.CircleImageView
+            <ImageView
                 android:id="@+id/song_list"
-                android:layout_width="66dp"
-                android:layout_height="66dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_centerInParent="true"
-                android:src="@drawable/icon_song_list"
-                app:civ_border_color="@color/black"
-                app:civ_border_width="4dp" />
+                android:src="@drawable/icon_song_list_1" />
 
-            <de.hdodenhof.circleimageview.CircleImageView
+            <ImageView
                 android:id="@+id/recommend"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="33dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/icon_recommend" />
+                android:paddingBottom="8dp"
+                android:paddingLeft="9dp"
+                android:paddingRight="8dp"
+                android:paddingTop="6dp"
+                android:src="@drawable/icon_recommend_1" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -70,40 +76,75 @@
                 android:layout_width="66dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:layout_marginStart="39dp"
+                android:layout_marginStart="36dp"
                 android:text="排行榜"
                 android:textColor="@color/black"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:layout_marginTop="2dp"
-                android:text=" 歌单"
+                android:text="  歌单"
                 android:textColor="@color/black"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <TextView
 
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_marginEnd="42dp"
+                android:layout_marginEnd="30dp"
                 android:text="推荐"
                 android:textColor="@color/black"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
         </RelativeLayout>
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="32dp" />
+            android:layout_height="7dp" />
 
-        <include
-            layout="@layout/song_listview"
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="1dp"
+            android:background="@color/gray" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="15dp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="推荐歌单"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="16dp"
+                android:text="更多"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="16dp" />
+
+        <android.support.v7.widget.RecyclerView
+            android:visibility="gone"
+            android:id="@+id/finder_recycle_view"
+            android:layout_width="match_parent"
+            android:layout_height="940dp" />
 
     </LinearLayout>
 
-</ScrollView>
+</com.minminaya.bogemusic.widget.view.MyScrollView>
