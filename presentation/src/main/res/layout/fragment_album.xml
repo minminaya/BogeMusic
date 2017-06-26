@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray"
+    android:background="#00000000"
     tools:context="com.minminaya.bogemusic.play.fragment.AlbumFragment">
 
     <RelativeLayout
@@ -31,30 +31,6 @@
             android:src="@drawable/zjl" />
     </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="44dp">
 
-        <Button
-            android:background="@drawable/play_favorite_selector"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="60dp" />
-
-        <Button
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_centerInParent="true" />
-
-        <Button
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="60dp" />
-    </RelativeLayout>
 
 </RelativeLayout>

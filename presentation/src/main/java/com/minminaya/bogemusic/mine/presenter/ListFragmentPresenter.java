@@ -47,7 +47,7 @@ public class ListFragmentPresenter extends BasePresenter<ListFragment> {
             myBinder = (MediaService.MyBinder) service;
 //            Log.d("onServiceConnected", "Service与Activity已连接");
             myBinder.setData(list);
-            myBinder.playMusic();
+//            myBinder.playMusic();
             mHandler.post(runnable);
         }
 
