@@ -4,13 +4,13 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/imageView"
@@ -32,6 +32,7 @@
                 android:textSize="20sp" />
 
             <TextView
+                android:id="@+id/tv_topInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/text1"
@@ -42,16 +43,13 @@
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/imageView"
-                android:background="@color/bisque" />
+
         </RelativeLayout>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycle_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="1200dp"
+            android:layout_marginTop="5dp" />
     </LinearLayout>
 </com.minminaya.bogemusic.widget.view.MyScrollView>

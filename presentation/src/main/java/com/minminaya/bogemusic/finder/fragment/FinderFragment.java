@@ -113,7 +113,7 @@ public class FinderFragment extends BaseFragment {
         bannerViewpager.setOffscreenPageLimit(5);
         BannerComponent bannerComponent = new BannerComponent(bannerIndicator, bannerViewpager, false);
         int[] images = getBannerImages();
-        IndicatorAdapter indicatorAdapter = new IndicatorAdapter(images);
+        IndicatorAdapter indicatorAdapter = new IndicatorAdapter(images ,getContext());
         bannerComponent.setAdapter(indicatorAdapter);
         bannerComponent.setAutoPlayTime(4000);
         bannerComponent.startAutoPlay();
@@ -129,7 +129,6 @@ public class FinderFragment extends BaseFragment {
 
     @Override
     public void bind() {
-//        refreshBannerData();
     }
 
     @Override

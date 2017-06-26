@@ -1,34 +1,29 @@
 package com.minminaya.bogemusic.finder.adapter;
 
+import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
+import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.minminaya.bogemusic.App;
+import com.minminaya.bogemusic.C;
 import com.minminaya.bogemusic.finder.activity.WebSongListActivity;
-import com.minminaya.data.api.ApiMethodString;
-import com.minminaya.data.http.NetWork;
-import com.minminaya.data.model.apimodel.MusicTopModel;
 import com.shizhefei.view.indicator.IndicatorViewPager;
 
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
-/**
+/** 轮播banner的adapter
  * Created by Niwa on 2017/5/26.
  */
 
 public class IndicatorAdapter extends IndicatorViewPager.IndicatorViewPagerAdapter {
 
     private int[] images;
-
-    public IndicatorAdapter(int[] images) {
+    private Context mContext;
+    public IndicatorAdapter(int[] images, Context context) {
         this.images = images;
+        this.mContext = context;
     }
 
     @Override
@@ -58,7 +53,7 @@ public class IndicatorAdapter extends IndicatorViewPager.IndicatorViewPagerAdapt
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /** 排行榜代表的值*/
+                /** 排行榜代表的tpye值*/
                 int tpye = 0;
                 switch (position) {
                     case 0:
@@ -77,45 +72,16 @@ public class IndicatorAdapter extends IndicatorViewPager.IndicatorViewPagerAdapt
                         tpye = 8;
                         break;
                 }
-                Toast.makeText(App.getINSTANCE(), "当前view是：" + position + ",tpye:" + tpye, Toast.LENGTH_SHORT).show();
-                loadTopInfo(tpye);//加载数据
-                Intent intent = new Intent(App.getINSTANCE(), WebSongListActivity.class);
-                App.getINSTANCE().startActivity(intent);
+                Intent intent = new Intent(mContext, WebSongListActivity.class);
+
+                Bundle bundle = new Bundle();
+                bundle.putInt("tpye", tpye);
+                bundle.putInt("source", C.GO_TO_TOP_SONG_LIST_FRAGMENT);
+                intent.putExtras(bundle);
+                mContext.startActivity(intent);
+
             }
         });
         return convertView;
     }
-    /**
-     *  获取指定排行榜信息
-     *  @param topType 指定排行榜的tpye
-     * */
-    public void loadTopInfo(int topType) {
-        NetWork.getMusicApi()
-                .loadMusicTopContentAndInfo(ApiMethodString.MUSIC_TOP_FLAG, topType, 21, 0)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(observer);
-    }
-
-    Observer<MusicTopModel> observer = new Observer<MusicTopModel>() {
-        @Override
-        public void onSubscribe(Disposable d) {
-
-        }
-
-        @Override
-        public void onNext(MusicTopModel value) {
-            Log.e("IndicatorAdapter", "" + value.getBillboard().getComment());
-        }
-
-        @Override
-        public void onError(Throwable e) {
-            e.printStackTrace();
-        }
-
-        @Override
-        public void onComplete() {
-
-        }
-    };
 }

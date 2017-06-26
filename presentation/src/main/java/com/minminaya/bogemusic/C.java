@@ -5,6 +5,8 @@ package com.minminaya.bogemusic;
  */
 
 public class C {
+    public static final int GO_TO_TOP_SONG_LIST_FRAGMENT = 032323232;
+
 
 
     public static final class InstantForReceiver{

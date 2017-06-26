@@ -1,5 +1,6 @@
 package com.minminaya.bogemusic.finder.adapter;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.minminaya.bogemusic.App;
 import com.minminaya.bogemusic.R;
+import com.minminaya.bogemusic.play.activity.MusicPlayActivity;
 import com.minminaya.data.api.ApiMethodString;
 import com.minminaya.data.http.NetWork;
 import com.minminaya.data.model.apimodel.SongAllInfo;
@@ -60,6 +62,9 @@ public class FinderRecycleViewAdapter extends RecyclerView.Adapter<FinderRecycle
             @Override
             public void onClick(View v) {
                 getSongInfo(songList.get(position).getSongId());
+
+                Intent intent = new Intent(App.getINSTANCE(), MusicPlayActivity.class);
+                
             }
         });
     }
