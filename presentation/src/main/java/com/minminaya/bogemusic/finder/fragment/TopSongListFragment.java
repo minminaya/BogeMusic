@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -46,6 +47,8 @@ public class TopSongListFragment extends BaseFragment {
     TextView tvTopInfo;
     @Bind(R.id.recycle_view)
     RecyclerView recycleView;
+    @Bind(R.id.relativeLayout)
+    RelativeLayout relativeLayout;
 
     private WebTopItemRecyclerViewAdapter webTopItemRecyclerViewAdapter;
 
@@ -124,7 +127,7 @@ public class TopSongListFragment extends BaseFragment {
             Glide.with(App.getINSTANCE()).load(value.getBillboard().getPicS192()).into(imageView);
             tvTopTile.setText(value.getBillboard().getName());
             tvTopInfo.setText(value.getBillboard().getComment());
-
+            relativeLayout.setVisibility(View.VISIBLE);
             recycleView.setAdapter(webTopItemRecyclerViewAdapter);
 
         }

@@ -56,11 +56,6 @@ public class FinderFragment extends BaseFragment {
     @Bind(R.id.finder_recycle_view)
     RecyclerView finderRecycleView;
 
-    private String newMusicTopPicAddress;
-    private String hotMusicTopPicAddress;
-    private String webMusicTopPicAddress;
-    private String popularMusicTopPicAddress;
-    private String westMusicTopPicAddress;
 
 
     private List<SongList> songList = new ArrayList<>();

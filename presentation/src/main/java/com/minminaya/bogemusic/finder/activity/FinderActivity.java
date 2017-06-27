@@ -1,5 +1,6 @@
 package com.minminaya.bogemusic.finder.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -38,8 +39,6 @@ public class FinderActivity extends BaseActivity
 
     @Bind(R.id.content_finder)
     RelativeLayout contentFinder;
-    @Bind(R.id.fab)
-    FloatingActionButton mFab;
     @Bind(R.id.nav_view)
     NavigationView mNavgationView;
     @Bind(R.id.drawer_layout)
@@ -104,18 +103,22 @@ public class FinderActivity extends BaseActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         //处理每个item的逻辑
+
+        if (id == R.id.nav_formine) {
+            Intent intent = new Intent(this, ScrollingActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.nav_exit) {
+            System.exit(0);
+        }
+
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 
 
-    @OnClick({R.id.fab, R.id.nav_view, R.id.btn_setting, R.id.btn_search})
+    @OnClick({R.id.nav_view, R.id.btn_setting, R.id.btn_search})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.fab:
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                break;
             case R.id.nav_view:
                 break;
             case R.id.btn_setting:

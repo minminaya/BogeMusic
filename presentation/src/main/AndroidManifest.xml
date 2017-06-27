@@ -14,7 +14,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:name">
-
         <activity
             android:name=".base.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -39,13 +38,18 @@
             android:name=".finder.activity.WebSongListActivity"
             android:launchMode="singleInstance"
             android:theme="@style/AppTheme.NoActionBar" />
-
-        <service
-            android:name=".play.service.MediaService"
+        <activity
+            android:name=".finder.activity.WebMusicPlayActivity"
             android:launchMode="singleInstance"
             android:theme="@style/AppTheme.NoActionBar" />
 
+        <service android:name=".play.service.MediaService" />
+        <service android:name=".finder.service.WebMusicService" />
 
+        <activity
+            android:name=".finder.activity.ScrollingActivity"
+            android:label="关于我们"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

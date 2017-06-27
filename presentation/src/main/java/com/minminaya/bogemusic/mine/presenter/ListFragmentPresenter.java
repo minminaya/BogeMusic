@@ -157,6 +157,9 @@ public class ListFragmentPresenter extends BasePresenter<ListFragment> {
                 case C.InstantForReceiver.BUTTON_LAST:
                     myBinder.preciousMusic();
                     break;
+                case C.InstantForReceiver.BUTTON_RESET:
+                    myBinder.closeMedia();
+                    break;
                 case C.InstantForReceiver.BUTTON_NEXT:
                     myBinder.nextMusic();
                     break;

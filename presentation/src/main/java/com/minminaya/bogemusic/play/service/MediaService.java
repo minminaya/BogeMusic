@@ -49,8 +49,8 @@ public class MediaService extends Service {
         Log.e(TAG, "onBind");
         return myBinder;
     }
-
     public class MyBinder extends Binder {
+
         /**
          * 播放音乐
          */
@@ -132,6 +132,7 @@ public class MediaService extends Service {
             if (mMediaPlayer != null) {
                 mMediaPlayer.stop();
                 mMediaPlayer.release();
+                mHandler.removeCallbacks(mRunnable);
             }
         }
 
@@ -155,7 +156,7 @@ public class MediaService extends Service {
          * 获取播放位置
          */
         public int getPlayPosition() {
-            return mMediaPlayer.getCurrentPosition();
+                return mMediaPlayer.getCurrentPosition();
         }
 
         /**
@@ -239,7 +240,6 @@ public class MediaService extends Service {
 
             i.putExtra(C.InstantForBroadcastReceiverForMusicServiceData.CURRENT_SONG_POSITION, myBinder.getPlayPosition());
             App.getINSTANCE().sendBroadcast(i);
-
 //            Log.e("MusicPlayActivity", "发送次数：" + p++);
             mHandler.postDelayed(mRunnable, 1000);
         }

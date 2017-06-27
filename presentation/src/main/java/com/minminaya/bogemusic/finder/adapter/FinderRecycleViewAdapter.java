@@ -1,6 +1,7 @@
 package com.minminaya.bogemusic.finder.adapter;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,9 +13,11 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.minminaya.bogemusic.App;
 import com.minminaya.bogemusic.R;
+import com.minminaya.bogemusic.finder.activity.WebMusicPlayActivity;
 import com.minminaya.bogemusic.play.activity.MusicPlayActivity;
 import com.minminaya.data.api.ApiMethodString;
 import com.minminaya.data.http.NetWork;
+import com.minminaya.data.model.apimodel.Bitrate;
 import com.minminaya.data.model.apimodel.SongAllInfo;
 import com.minminaya.data.model.apimodel.SongList;
 
@@ -40,6 +43,8 @@ public class FinderRecycleViewAdapter extends RecyclerView.Adapter<FinderRecycle
         return songList;
     }
 
+    private Bitrate mBitrate;
+
     public void setSongList(List<SongList> songList) {
         this.songList = songList;
     }
@@ -63,8 +68,6 @@ public class FinderRecycleViewAdapter extends RecyclerView.Adapter<FinderRecycle
             public void onClick(View v) {
                 getSongInfo(songList.get(position).getSongId());
 
-                Intent intent = new Intent(App.getINSTANCE(), MusicPlayActivity.class);
-                
             }
         });
     }
@@ -109,6 +112,7 @@ public class FinderRecycleViewAdapter extends RecyclerView.Adapter<FinderRecycle
 
         @Override
         public void onNext(SongAllInfo value) {
+            mBitrate = value.getBitrate();
             Log.e("FinderAdapter", "" + value.getSonginfo().getTitle());
         }
 
@@ -119,7 +123,12 @@ public class FinderRecycleViewAdapter extends RecyclerView.Adapter<FinderRecycle
 
         @Override
         public void onComplete() {
-
+            Intent intent = new Intent(App.getINSTANCE(), WebMusicPlayActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("fileLink", mBitrate.getFileLink());
+            intent.putExtras(bundle);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            App.getINSTANCE().startActivity(intent);
         }
     };
 
